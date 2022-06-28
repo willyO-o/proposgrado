@@ -106,71 +106,118 @@
 								<div class="col">
 									<p class="text-center">Recibira información del programa:
 										<b id="detalle-programa"></b>
+										<br>
 									</p>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-12 col-sm-12 col-md-4">
+							<div class="row mt-1">
+								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="form-group-1">
-										<label for="ci">Cédula de Identidad</label>
+										<label for="ci">CI<span class="text-danger">*</span></label>
 										<input class="form-control" id="ci" name="ci" type="text" required>
 									</div>
 								</div>
-								<div class="col-12 col-sm-12 col-md-3">
+
+								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="form-group-1">
-										<label for="expedido">Exp</label>
-										<select class="form-select" id="expedido" name="expedido" required>
-											<option value=""></option>
-											<option value="LP">LP</option>
-											<option value="CH">CH</option>
-											<option value="CB">CB</option>
-											<option value="OR">OR</option>
-											<option value="PT">PT</option>
-											<option value="TJ">TJ</option>
-											<option value="SC">SC</option>
-											<option value="BE">BE</option>
-											<option value="PD">PD</option>
-										</select>
+										<label for="expedido">Expedido<span class="text-danger">*</span></label>
+										<select id="expedido" name="expedido" class="form-select" required>
+                                                <option value=""></option>
+                                                <option value="LP" selected>LP</option>
+                                                <option value="CH">CH</option>
+                                                <option value="CB">CB</option>
+                                                <option value="OR">OR</option>
+                                                <option value="PT">PT</option>
+                                                <option value="TJ">TJ</option>
+                                                <option value="SC">SC</option>
+                                                <option value="BE">BE</option>
+                                                <option value="PD">PD</option>
+												<option value="QR">QR</option>
+                                            </select>
 									</div>
 								</div>
-								<div class="col-12 col-sm-12 col-md-5">
+
+								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="form-group-1">
-										<label for="nombre">Nombre(s)</label>
+										<label for="nombre">Nombre(s) <span class="text-danger">*</span></label>
 										<input class="form-control" id="nombre" name="nombre" type="text" required>
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-12 col-sm-12 col-md-7">
+
+								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="form-group-1">
-										<label for="paterno">Paterno</label>
+										<label for="paterno">Paterno <span class="text-danger">*</span></label>
 										<input class="form-control" id="paterno" name="paterno" type="text" required>
 									</div>
 								</div>
-								<div class="col-12 col-sm-12 col-md-5">
+								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="form-group-1">
 										<label for="materno">Materno</label>
 										<input class="form-control" id="materno" name="materno" type="text">
 									</div>
 								</div>
-							</div>
-							<div class="row">
-								<div class="col-12 col-sm-12 col-md-7">
+								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 									<div class="form-group-1">
-										<label for="correo">Correo</label>
-										<input class="form-control text-lowercase" id="correo" name="correo" type="text" onkeyup="this.value = this.value.toUpperCase();" required>
-									</div>
-								</div>
-
-								<div class="col-12 col-sm-12 col-md-5">
-									<div class="form-group-1">
-										<label for="celular">Celular</label>
+										<label for="celular">Celular (WhatsApp) <span class="text-danger">*</span></label>
 										<div class="input-group">
 											<input class="form-control" id="celular" name="celular" type="text" required style="width: 20px;">
-											<a href="javascript:void(0)" class="enviar-whatsapp"><span class="input-group-text pe-auto">
+											<!-- <a href="javascript:void(0)" class="enviar-whatsapp"><span class="input-group-text pe-auto">
 													<i class="lni lni-whatsapp"></i>
 												</span>
-											</a>
+											</a> -->
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-12">
+									<!-- <a class="tengoCorreoElectronico text-center d-flex justify-content-center" href="javascript:;">Tengo correo electrónico</a>
+									<a class="noTengoCorreoElectronico text-center d-flex justify-content-center d-none" href="javascript:;">No tengo correo electrónico</a> -->
+								</div>
+							</div>
+
+							<div class="row rowCorreo">
+							</div>
+
+							<div class="row">
+								<div class="col">
+									<p class="font-weight-bold mt-2"><strong>Recibir información sobre:</strong></p>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-12 col-sm-12 col-md-12 col-lg-12" style="margin-left: 10px;">
+
+									<div class="col-lg-6 col-12">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Contenido" required>
+											<label class="form-check-label">Contenido</label>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Precio" required>
+											<label class="form-check-label">Precio</label>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Duración" required>
+											<label class="form-check-label">Duración</label>
+										</div>
+									</div>
+									<div class="col-lg-6 col-12">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Requisitos mínimos" required>
+											<label class="form-check-label" for="informacion">Requisitos mínimos</label>
+										</div>
+										<hr>
+									</div>
+									<div class="col-lg-6 col-12">
+										<div class="form-check">
+											<input type="checkbox" class="form-check-input width-auto" id="marcarTodo" value="Marcar Todo">
+											<label class="form-check-label">Marcar Todo</label>
 										</div>
 									</div>
 								</div>
@@ -216,11 +263,9 @@
 				</div>
 
 				<div id="modal-footer" class="modal-footer">
-					<div class="button">
-						<button class="btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-					</div>
-					<div class="button d-grid gap-2 d-md-flex justify-content-md-end">
-						<button id="btn-enviar-informacion-programa" class="btn" type="submit" class="btn btn-primary"><i class="lni lni-arrow-right-circle" id="icono-enviar-formulario"></i> Enviar Informacíon <small id="porcentaje-enviar-formulario"></small></button>
+					<div class="button d-flex align-items-center">
+						<button id="btn-enviar-informacion-programa" class="btn btn-info" type="submit" class="btn btn-primary"><i class="lni lni-arrow-right-circle" id="icono-enviar-formulario"></i> Recibir Información<small id="porcentaje-enviar-formulario"></small></button>
+						<button type="button" class="btn btn-secondary enviar-whatsapp" style="margin-left: 2px;">Contacto Coordinador</button>
 					</div>
 				</div>
 			</form>
@@ -344,7 +389,6 @@
 		</div>
 	</div>
 </div>
-
 
 <div class="modal" id="suscripcion-area" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	<div id="suscripcion-area-dialog">

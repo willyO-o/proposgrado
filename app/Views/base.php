@@ -107,15 +107,34 @@
                 });
             <?php endforeach; ?>
         });
+
         if ($('.glightbox').length) {
             GLightbox({
-                'href': 'https://youtu.be/A_QN1g3xgnM',
+                'href': 'https://youtu.be/PgQbrhSQVE0',
                 'type': 'video',
                 'source': 'youtube', //vimeo, youtube or local
                 'width': 900,
                 'autoplayVideos': true,
             });
         }
+
+
+        const current = document.getElementById("current");
+        const opacity = 0.6;
+        const imgs = document.querySelectorAll(".img");
+        imgs.forEach(img => {
+            img.addEventListener("click", (e) => {
+                //reset opacity
+                imgs.forEach(img => {
+                    img.style.opacity = 1;
+                });
+                current.src = e.target.src;
+                //adding class 
+                //current.classList.add("fade-in");
+                //opacity
+                e.target.style.opacity = opacity;
+            });
+        });
     </script>
 </body>
 

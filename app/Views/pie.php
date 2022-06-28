@@ -25,6 +25,13 @@
                         <h3><?= lang('global.ultimasNoticias') ?></h3>
                         <ul>
                             <li>
+                                <a href="/inicio/fexpo_sucre">
+                                    <img src="<?= base_url('edugrids/assets/images/blog/fexpo-sucre.jpeg'); ?>" alt="#">
+                                    Estamos presente en la Fexpo Sucre Internacional 2022
+                                </a>
+                                <span class="date"><i class="lni lni-calendar"></i>06 May., 2022</span>
+                            </li>
+                            <li>
                                 <a href="/inicio/feicobol">
                                     <img src="<?= base_url('edugrids/assets/images/blog/footer-news3.jpg'); ?>" alt="#">
                                     Estamos presentes en la FEICOBOL 2021

@@ -2,9 +2,9 @@
 
 namespace App\Controllers\Reportes;
 
-use FPDF;
+use App\Controllers\Reportes\FpdfPsg;
 
-class InscripcionReporte extends FPDF
+class InscripcionReporte extends FpdfPsg
 {
     public function formularioInscripcion($doc)
     {
@@ -456,6 +456,53 @@ class InscripcionReporte extends FPDF
         // Número de página
         $this->Cell(0, 10, utf8_decode('Página ') . $this->PageNo() . '/{nb}', 0, 0, 'R');
         $this->AliasNbPages();
+    }
+    public function solicitudProrroga($doc)
+    {
+        $referencia = utf8_decode('Ref.: SOLICITUD DE PRÓRROGA PARA LA PRESENTACIÓN DEL DIPLOMA ACADÉMICO Y TITULO EN PROVISIÓN NACIONAL LEGALIZADOS.');
+        // $this->AddFont('Rubik', '', 'Rubik-Regular.php');
+        // $this->AddFont('RubikB', '', 'Rubik-Medium.php');
+        $this->SetMargins(30, 30, 30);
+        $this->AddPage('P', 'Letter');
+        $this->Image(FCPATH . 'imagenes/solicitud.jpg', 0, 0, 216, 279);
+        $this->SetFont('Arial', '', 12);
+        $this->Cell(0, 8, 'El Alto, ' . fechaLiteral($doc['fecha_registro'], 1), 0, 1, 'R');
+        $this->Cell(0, 8, utf8_decode('Señor:'), 0, 1, 'L');
+        $this->Cell(0, 8, 'Dr. Richard Jorge Torrez Juaniquina Ph. D.', 0, 1, 'L');
+        $this->SetFont('Arial', '', 11);
+        $this->Cell(0, 8, 'DIRECTOR DE POSGRADO - UPEA', 0, 1, 'L');
+        $this->SetFont('Arial', '', 12);
+        $this->Cell(0, 8, 'Presente.-', 0, 1, 'L');
+        $this->Ln(16);
+        $this->SetFont('Arial', 'BU', 12);
+        // $this->Cell(0,10, $referencia, 0, 1,'R');
+        $this->SetX(60);
+        $this->MultiCell(0, 7, $referencia, 0, 'R');
+        // strlen($referencia) >= 69 ? $this->Cut_String($referencia, 45, 'R', 0) : $this->Cell(0, 10, $referencia, 0, 1, 'R');
+        $this->SetFont('Arial', '', 12);
+        $this->Ln(+16);
+        $this->Cell(0, 8, 'Distinguido Director:', 0, 1, 'L');
+        $this->Ln(5);
+        $this->MultiCell(0, 8, utf8_decode("Me es grato hacerle llegar un saludo cordial y fraterno a nombre mío, deseándole mis mejores deseos de éxitos en las labores que desempeña."), '', 'J');
+        $this->Ln(5);
+        $this->SetStyle('p', 'Arial', '', 12, '0, 0, 0');
+        $this->SetStyle('pB', 'Arial', 'B', 12, '0, 0, 0');
+        $this->WriteTag(0, 7, utf8_decode("<p>El motivo de la presente es para solicitar a su autoridad una</p> <pB>PRÓRROGA EN LA PRESENTACIÓN DEL DIPLOMA ACADÉMICO Y EL TÍTULO EN PROVISIÓN NACIONAL LEGALIZADOS,</pB> <p>para la inscripción al programa \"{$doc['grado_academico']}, {$doc['nombre_programa']}, {$doc['modalidad']} {$doc['numero_version']}\"</p>"));
+        $this->Ln(5);
+        $this->MultiCell(0, 8, utf8_decode("Por ése motivo es que le mando mi solicitud, esperando el visto bueno de su autoridad me despido."), '', 'J');
+        $this->Ln(5);
+        $this->Cell(156, 8, 'Atentamente,', 0, 1, 'L');
+        $this->Ln(20);
+        $this->SetX(30);
+        $y = $this->GetY();
+        // $y += 20;
+        $lengthString = $this->GetStringWidth(utf8_decode("{$doc['nombre']} {$doc['paterno']} {$doc['materno']}"));
+        $x1 = 105 - ($lengthString / 2);
+        $x2 = $x1 + $lengthString + 3;
+        $this->Line($x1, $y, $x2, $y);
+        $this->Cell(0, 8, utf8_decode("{$doc['nombre']} {$doc['paterno']} {$doc['materno']}"), 0, 1, 'C');
+        $this->Cell(0, 4, trim("{$doc['ci']} {$doc['expedido']}"), 0, 1, 'C');
+        return $this->Output('S');
     }
     public function cartaCompromisoInscripcion($doc)
     {

@@ -219,32 +219,73 @@ class Inscripcion extends BaseController
 		// var_dump(APPPATH);
 		// var_dump(WRITEPATH);
 	}
+
 	public function informacion()
 	{
 		$validation =  \Config\Services::validation();
 		$validation->setRules([
 			'id_publicacion' => ['label' => 'nro publicación', 'rules' => 'required|is_natural_no_zero'],
-			'ci' => ['label' => 'ci', 'rules' => 'required|max_length[10]|min_length[7]'],
-			'expedido' => ['label' => 'expedido', 'rules' => 'required|max_length[2]|min_length[2]'],
+			'ci' => ['label' => 'ci', 'rules' => 'required|max_length[10]'],
+			'expedido' => ['label' => 'expedido', 'rules' => 'required|max_length[2]'],
 			'paterno' => ['label' => 'paterno', 'rules' => 'required|min_length[3]|max_length[40]'],
 			'materno' => ['label' => 'materno', 'rules' => 'max_length[40]'],
 			'nombre' => ['label' => 'nombre', 'rules' => 'required|min_length[3]|max_length[40]'],
-			'celular' => ['label' => 'celular', 'rules' => 'required|min_length[8]|max_length[8]|is_natural_no_zero'],
-			'correo' => ['label' => 'correo electronico', 'rules' => 'required|valid_email|max_length[40]'],
+			'celular' => ['label' => 'celular', 'rules' => 'required|min_length[8]|max_length[8]|is_natural_no_zero|is_unique[persona_externa.celular]'],
+			'correo' => ['label' => 'correo electronico', 'rules' => 'max_length[40]'],
 		]);
 
 		if (!$validation->withRequest($this->request)->run()) {
-			// return var_dump($validation->listErrors());
 			return $this->response->setJSON(['error' => $validation->listErrors()]);
 		} else {
 			$carnet = str_replace(' ', '', $this->request->getPost('ci'));
+			$celular = str_replace(' ', '', $this->request->getPost('celular'));
+			$correo = str_replace(' ', '', $this->request->getPost('correo'));
 			$idPublicacion = $this->request->getPost('id_publicacion');
 			$publicacion = $this->consultas->listarPublicacion('programa', ['id_publicacion' => $idPublicacion])->getRowArray();
-
 			$persona = $this->consultas->seleccionarTabla('persona_externa', '*', ['ci' => $carnet])->getRowArray();
-			// return var_dump($persona);
-			// $persona = array_merge($persona, ['correo' => $this->request->getPost('correo')]);
-			// $personaPosgrado = $this->consultas->seleccionarTabla('persona','*', ['ci' => $carnet])->getRowArray();
+
+			$message = [];
+			$message1 = [];
+			$msg = "Sea bienvenid@ a *POSGRADO UPEA*
+Para seguir nuestra amplia oferta académica de 
+DIPLOMADOS, ESPECIALIDADES, MAESTRIAS, DOCTORADOS Y POST DOCTORADOS visítenos en *https://posgrado.upea.bo*
+=============================
+*CONTENIDO DEL PROGRAMA:* " . $publicacion["nombre_programa"] . ", MODALIDAD: " . $publicacion["modalidad"] . ", VERSIÓN: " . $publicacion["numero_version"] . " \n";
+			foreach ($this->request->getPost('informacion') as $value) {
+				if ($value == 'Contenido') {
+					$message['contenido'] = $this->formtarListaWhatsapp(explode('<li>', strip_tags(trim($publicacion['contenido_minimo']), '<li>')));
+					$message1['contenido'] = $publicacion['contenido_minimo'];
+
+					$msg .= $message['contenido'];
+				}
+
+				if ($value == 'Precio') {
+					$msg .= "=============================\n*PRECIO* \n";
+					$precio = [
+						'matricula' => $publicacion['monto_matricula'] . " Bs.",
+						'colegiatura' => $publicacion['precio_programa'] . " Bs.",
+					];
+					$message['precio'] = $precio;
+					$message1['precio'] = $precio;
+					$msg .= "Costo Mátricula: " . $precio['matricula'] . "\n";
+					$msg .= "Costo Colegiatura: " . $precio['colegiatura'] . "\n";
+				}
+
+				if ($value == 'Duración') {
+					$msg .= "=============================\n*DURACIÓN* \n";
+					$message['duracion'] = $publicacion['duracion'] . " meses";
+					$message1['duracion'] = $publicacion['duracion'] . " meses";
+					$msg .= "Duración: " . $publicacion['duracion'] . " meses \n";
+				}
+
+				if ($value == 'Requisitos mínimos') {
+					$msg .= "=============================\n*REQUISITOS INSCRIPCIÓN* \n";
+					$message['requisitos'] = $this->formtarListaWhatsapp(explode('<li>', strip_tags(trim($publicacion['requisitos_inscripcion']), '<li>')));
+					$message1['requisitos'] = $publicacion['requisitos_inscripcion'];
+					$msg .= $message['requisitos'];
+				}
+			}
+			//** FIN PERSONALIZAR MENSAJE */
 			if (is_null($persona)) {
 				$idPersona = $this->consultas->insertarTabla('persona_externa', [
 					'ci' => $this->nuloSiVacio(mb_convert_case($this->request->getVar('ci'), MB_CASE_UPPER)),
@@ -261,20 +302,46 @@ class Inscripcion extends BaseController
 					$persona['correo'] = $this->request->getPost('correo');
 					if ($this->verificarInscripcion(['p.id_publicacion' => $idPublicacion, 'id_persona_interesado' => $idPersona]) == null) {
 						$this->inscribirInformar($idPublicacion, $idPersona, 'INTERESADO');
-						(new Email)->correoInformacion($persona, $publicacion, base_url("programa/{$publicacion['id_publicacion']}"));
+					}
+
+					if ($persona['correo'] != '') {
+						(new Email)->correoInformacion($persona, $publicacion, base_url("programa/{$publicacion['id_publicacion']}"), $message1);
+						return $this->response->setJSON(['exito' => lang('global.informacionPrograma')]);
+					} else {
+
+						return $this->response->setJSON(['exito' => lang('global.informacionCelular'), 'message' => $msg, 'celular' => $celular]);
 					}
 				}
-				return $this->response->setJSON(['exito' => lang('global.informacionPrograma')]);
 			} else {
 				$persona = array_merge($persona, ['correo' => $this->request->getPost('correo')]);
-				// return var_dump($persona);
 				if ($this->verificarInscripcion(['p.id_publicacion' => $idPublicacion, 'id_persona_interesado' => $persona['id_persona_externa']]) == null) {
 					$this->inscribirInformar($idPublicacion, $persona['id_persona_externa'], 'INTERESADO');
 				}
-				(new Email)->correoInformacion($persona, $publicacion, base_url("programa/{$publicacion['id_publicacion']}"));
-				return $this->response->setJSON(['exito' => lang('global.informacionPrograma')]);
+				if ($persona['correo'] != '') {
+					(new Email)->correoInformacion($persona, $publicacion, base_url("programa/{$publicacion['id_publicacion']}"), $message1);
+					return $this->response->setJSON(['exito' => lang('global.informacionPrograma')]);
+				} else {
+					return $this->response->setJSON(['exito' => lang('global.informacionCelular'), 'message' => $msg, 'celular' => $celular]);
+				}
 			}
 		}
+	}
+
+	public function formtarListaWhatsapp($campo)
+	{
+		$d = '';
+		$cn = 1;
+		foreach ($campo as $value) {
+			if ($value != '') {
+				$d .= $cn . '. ' . str_replace('&nbsp;', '', strip_tags($value)) . "\n";
+				$cn++;
+			}
+		}
+		return $d;
+	}
+
+	public function mensaje()
+	{
 	}
 
 	public function suscripcionArea()
@@ -359,6 +426,7 @@ class Inscripcion extends BaseController
 
 		if (!is_null($this->data['publicacion']) && !is_null($datos)) {
 
+			$this->data['solicitud'] = 'data:application/pdf;base64,' . base64_encode((new InscripcionReporte())->solicitudInscripcion($datos));
 			$this->data['cartaCompromiso'] = 'data:application/pdf;base64,' . base64_encode((new InscripcionReporte())->cartaCompromisoInscripcion($datos));
 			$pagos = [];
 			foreach ($this->consultas->seleccionarTabla('tipo_pago', 'id_tipo_pago, descripcion_tipo_pago', ['estado_tipo_pago' => 'ACTIVO'])->getResultArray() as $key => $value) {
@@ -367,8 +435,7 @@ class Inscripcion extends BaseController
 					$pagos[$value['descripcion_tipo_pago']] = $deposito;
 			}
 			$this->data['formulario'] = 'data:application/pdf;base64,' . base64_encode((new InscripcionReporte())->formularioInscripcion(array_merge($datos, ['pagos' => $pagos])));
-			$this->data['solicitud'] = 'data:application/pdf;base64,' . base64_encode((new InscripcionReporte())->solicitudInscripcion($datos));
-
+			$this->data['solicitudProrroga'] = 'data:application/pdf;base64,' . base64_encode((new InscripcionReporte())->solicitudProrroga($datos));
 			// is ajax request
 			if ($this->request->isAJAX()) {
 				$reportes = [];

@@ -10,7 +10,7 @@ class Inicio extends BaseController
 		// $this->data['publicacion'] = $this->consultas->listarPublicacion('programa', [], 'id_publicacion desc', 5)->getResultArray();
 		$this->data['publicacion'] = [];
 		$orden = ['DIPLOMADO', 'ESPECIALIDAD', 'MAESTRÍA', 'DOCTORADO', 'POST DOCTORADO'];
-		$programas = $this->consultas->listarPublicacion('programasDivididos', ['estado_publicacion' => 'PUBLICADO', 'fecha_fin_publicacion >= ' => date('Y-m-d')]);
+		$programas = $this->consultas->listarPublicacion('programasDivididos', ['fecha_fin_publicacion >= ' => date('Y-m-d')]);
 		foreach ($orden as $key => $value) {
 			$this->data['publicacion'] = array_merge($this->data['publicacion'], isset($programas[$value]) ? $programas[$value] : []);
 		}
@@ -94,9 +94,21 @@ class Inicio extends BaseController
 		return $this->templater->view('inicio/contacto', $this->data);
 	}
 
-    public function feicobol()
-    {
-        $this->data['expocruz'] = '';
-        return $this->templater->view('inicio/feicobol', $this->data);
-    }
+	public function fexpo_sucre()
+	{
+		$this->data['expocruz'] = '';
+		return $this->templater->view('inicio/fexpo-sucre', $this->data);
+	}
+
+	public function feicobol()
+	{
+		$this->data['expocruz'] = '';
+		return $this->templater->view('inicio/feicobol', $this->data);
+	}
+
+	public function testimonios()
+	{
+		$this->data['testimonios'] = '';
+		return $this->templater->view('inicio/testimonio', $this->data);
+	}
 }

@@ -43,13 +43,17 @@
                                     <ul class="sub-menu collapse" id="submenu-1-3">
                                         <!--<li class="nav-item"><a href="/inicio/expocruz">FexpoCruz 2021</a></li>-->
                                         <li class="nav-item"><a href="/inicio/feicobol">FeicoBol 2021</a></li>
+                                        <li class="nav-item"><a href="/inicio/fexpo_sucre">Fexpo Sucre 2022</a></li>
                                         <!--<li class="nav-item"><a href="#">Graduación II/2021</a></li>-->
                                     </ul>
                                 </li>
+                                <!-- <li class="nav-item"><a href="/inicio/testimonios"><?= lang('global.testimonios') ?></a></li> -->
                                 <li class="nav-item"><a href="/inicio/contacto"><?= lang('global.contacto') ?></a></li>
                             </ul>
                             <!--<form class="d-flex search-form">
-                                <input class="form-control me-2" type="search" placeholder="<?php // lang('global.buscar') ?>" aria-label="<?php // lang('global.buscar') ?>">
+                                <input class="form-control me-2" type="search" placeholder="<?php // lang('global.buscar') 
+                                                                                            ?>" aria-label="<?php // lang('global.buscar') 
+                                                                                                            ?>">
                                 <button class="btn btn-outline-success" type="submit"><i class="lni lni-search-alt"></i></button>
                             </form>-->
                         </div>

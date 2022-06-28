@@ -4,7 +4,7 @@
 ?>
 <section class="hero-area">
 	<div class="hero-slider">
-		<div class="hero-inner overlay" style="background-image: url('<?php echo base_url('/edugrids/assets/images/hero/slider-bg1'.IDSEDE.'.jpg') ?>');">
+		<div class="hero-inner overlay" style="background-image: url('<?php echo base_url('/edugrids/assets/images/hero/slider-bg1' . IDSEDE . '.jpg') ?>');">
 			<div class="container">
 				<div class="row ">
 					<div class="col-lg-8 offset-lg-2 col-md-12 col-12">
@@ -137,6 +137,30 @@
 
 <section class="about-us section">
 	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-12">
+				<div class="about-left">
+					<div class="about-title align-left">
+						<span class="wow fadeInDown" data-wow-delay=".2s">Eventos 2022</span>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Estamos presentes en la Fexpo Sucre Internacional 2022</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">De 6 al 15 de mayo, expondremos nuestra
+							oferta académica, nuestros resultados obtenidos, Nuestra planificación para la gestión 2022 y mucho más.</p>
+						<p class="qote wow fadeInUp" data-wow-delay=".8s">Visita nuestro stand, y recibe diversos beneficios, entre
+							los cuales incluiremos: becas, descuentos, regalos y promociones especiales.</p>
+						<div class="button wow fadeInUp" data-wow-delay="1s">
+							<a href="#" class="btn">Seguir Leyendo</a>
+							<a href="https://youtu.be/PgQbrhSQVE0" class="glightbox video btn"> Reproducir Video<i class="lni lni-play"></i></a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-12">
+				<div class="about-right wow fadeInRight" data-wow-delay=".4s">
+					<img src="<?= base_url('edugrids/assets/images/about/fexpo-sucre.jpeg'); ?>" alt="#">
+				</div>
+			</div>
+		</div>
+		<hr>
 		<div class="row">
 			<div class="col-lg-6 col-12">
 				<div class="about-left">

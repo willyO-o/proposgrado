@@ -36,7 +36,7 @@
                             <div class="col-sm-12 col-md-8 col-lg-8">
                                 <div class="form-group">
                                     <input id="ci" name="ci" type="text">
-                                    <small class="text-danger">Solo número de carnet, sin extensión.</small>
+                                    <small class="text-danger">Incluya su extensión si lo tiene.</small>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4 col-lg-4">

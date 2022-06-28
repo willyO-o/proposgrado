@@ -26,28 +26,27 @@
                         <div class="card">
                             <div class="card-body">
                                 <h4 class="card-title">Gracias por su Inscripci&oacute;n </h4>
-                                <p>Concluy&oacute; su inscripci&oacute;n en l&iacute;nea satisfactoriamente, se realizar&aacute; la revisi&oacute;n correspondiente de sus datos enviados para la inscripci&oacute;n del programa. Este proceso durar&aacute; 48 horas si est&aacute; todo correcto, se le enviar&aacute; a su correo electr&oacute;nico y n&uacute;mero de WhatsApp su <strong><em><u>USUARIO Y CONTRASEÑA</u></em></strong>, si no, se le enviar&aacute; las observaciones correspondientes
-                                    <br>
-                                    <br>
-                                    <strong> NOTA:</strong>
-                                    <br>
-                                    1.- Si pasa m&aacute;s de 48 horas comuniquese con el administrador o al n&uacute;mero <strong><a href="https://api.whatsapp.com/send?phone=59176296846&text=Pasó las 48 horas y no me llego mi usuario y contraseña o alguna observación" title="haga click para enviar un mensaje de WhatsApp">76296846</a></strong>
-                                    <br>
-                                    2.- <strong> Para regularizar la inscripci&oacute;n debe entregar toda la documentaci&oacute;n f&iacute;sica a su coordinador del programa durante el periodo de dos semanas.</strong>
-                                    <br>
-                                    <br>
-                                    <strong> Descarga tus archivos:</strong>
-                                    <br>
-                                    1.- <a href="<?= $cartaCompromiso ?>" download="Carta de Compromiso">CARTA DE COMPROMISO</a>
-                                    <br>
-                                    2.- <a href="<?= $formulario ?>" id="formulario_inscripcion" download="Formulario de inscripcion">FORMULARIO DE INSCRIPCI&Oacute;N</a>
-                                    <br>
-                                    3.- <a href="<?= $solicitud ?>" id="solicitud_inscripcion" download="Solicitud de inscripcion">SOLICITUD DE INSCRIPCI&Oacute;N </a>
-                                    <br>
-                                    <!-- 4.- <a href="" id="formulario_01" download="formulario 01">FORMULARIO 01</a> -->
-                                    <!-- <br> -->
-                                    <br>
-                                </p>
+                                <p>Concluy&oacute; su pre inscripci&oacute;n en l&iacute;nea satisfactoriamente, se realizar&aacute; la revisi&oacute;n correspondiente de sus datos enviados para la inscripci&oacute;n al programa. Este proceso durar&aacute; 48 horas si est&aacute; todo correcto, se le enviar&aacute; a su correo electr&oacute;nico y n&uacute;mero de WhatsApp su <strong><em><u>USUARIO Y CONTRASEÑA</u></em></strong>, si no, se le enviar&aacute; las observaciones correspondientes</p>
+                                <br>
+                                <br>
+                                <strong> NOTA:</strong>
+                                <br>
+                                1.- Si pasa m&aacute;s de 48 horas comuniquese con el administrador o al n&uacute;mero <strong><a href="https://api.whatsapp.com/send?phone=59176296846&text=Pasó las 48 horas y no me llego mi usuario y contraseña o alguna observación" title="haga click para enviar un mensaje de WhatsApp">76296846</a></strong>
+                                <br>
+                                2.- <strong> Para regularizar la inscripci&oacute;n debe entregar toda la documentaci&oacute;n f&iacute;sica a su coordinador del programa durante el periodo de dos semanas.</strong>
+                                <br>
+                                <br>
+                                <strong> Descarga tus archivos:</strong>
+                                <br>
+                                <ol>
+                                    <li>1.- <a href="<?= $solicitud ?>" id="solicitud_inscripcion" download="Solicitud de inscripcion">SOLICITUD DE INSCRIPCI&Oacute;N </a></li>
+                                    <li>2.- <a href="<?= $cartaCompromiso ?>" download="Carta de Compromiso">CARTA DE COMPROMISO</a></li>
+                                    <li>3.- <a href="<?= $formulario ?>" id="formulario_inscripcion" download="Formulario de inscripcion">FORMULARIO DE INSCRIPCI&Oacute;N</a></li>
+                                    <li>4.- <a href="<?= $solicitudProrroga ?>" download="Carta de Prorroga">SOLICITUD DE PR&Oacute;RROGA</a></li>
+                                </ol>
+                                <!-- 4.- <a href="" id="formulario_01" download="formulario 01">FORMULARIO 01</a> -->
+                                <!-- <br> -->
+                                <br>
                             </div>
                         </div>
                     </div>

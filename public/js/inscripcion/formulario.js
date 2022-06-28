@@ -376,10 +376,10 @@ $(function () {
 		// 	cardinality: 1,
 		// },
 	});
-	var timer = null; // For referencing the timer
-	$('#ci').inputmask('[9{7,9}][-*{1,2}]');
+	var timer = null; // For referencing the timerr
+	$('#ci').inputmask('[9{6,9}][-*{1,2}]');
 	$('#ci').on('keyup', function () {
-		if ($(this).val().length < 7) $('#enviar-formulario-carnet').attr('disabled', true);
+		if ($(this).val().length < 6) $('#enviar-formulario-carnet').attr('disabled', true);
 		else $('#enviar-formulario-carnet').attr('disabled', false);
 	});
 
