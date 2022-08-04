@@ -13,14 +13,27 @@
 						<?php foreach ($programa[$key] as $k => $v) : ?>
 							<div class="col-lg-4 col-md-6 col-12 text-center">
 								<div class="single-course wow fadeInUp" data-wow-delay=".2s">
-									<div class="course-image">
+									<div class="course-image caja-imagen">
 										<a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>">
 											<img src="<?= base_url('imagenes/afiches/' . ($v['url'] == null ? 'programa.jpg' : $v['url'])) ?>" alt="#"></a>
+
 										<p class="price">Bs <?= number_format($v['precio_programa'], '0', ',', '.'); ?></p>
 									</div>
 									<div class="content pb-0">
-										<div>
-											<h5 class="mb-0" style="min-height: 70px;"><a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>"><?= $key . ' EN ' . $v['nombre_programa'] ?><br /><small><?= ' Versión: ' . numero_romano($v['numero_version']) ?></small></a></h5>
+										<div class="mb-2">
+											<h5 class="mb-0 titulo-programa" style="min-height: 70px;"><a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>"><?= $key . ' EN ' . $v['nombre_programa'] ?><br /><small><?= ' Versión: ' . numero_romano($v['numero_version']) ?></small></a></h5>
+
+											<?php if ($v["mostrar_coordinador"] == "NO") : ?>
+												<p> POSGRADO - SEDE CENTRAL </p>
+
+
+											<?php else : ?>
+												<?php if ($v["id_responsable_interno"]) : ?>
+													<p>Coordinador: <?= $v["nombre"] . " " . $v["paterno"] . " " . $v["materno"] ?></p>
+												<?php endif ?>
+											<?php endif ?>
+
+
 										</div>
 										<!-- <a href="service-single.html">
 											<small class="h5 mb-0 truncate-text text-dark" title="<?= $v['nombre_programa'] ?>"><?= $v['nombre_programa'] ?></small>
@@ -97,8 +110,8 @@
 				<h4 id="modal-title" class="modal-title"></h4>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<form action="<?= base_url('inscripcion/informacion') ?>" class="form form needs-validation" method="post" id="form-informacion-programa">
-				<input type="hidden" name="id_publicacion" id="id_publicacion">
+			<form action="<?= base_url("informacion/informacion_registrar_solicitud") ?>" class="form form needs-validation" method="post" id="form-informacion-programa">
+				<input type="hidden" name="publicacion" id="id_publicacion">
 				<div id="modal-body" class="modal-body">
 					<div class="contact-us">
 						<div class="form-main">
@@ -111,56 +124,35 @@
 								</div>
 							</div>
 							<div class="row mt-1">
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
-									<div class="form-group-1">
-										<label for="ci">CI<span class="text-danger">*</span></label>
-										<input class="form-control" id="ci" name="ci" type="text" required>
-									</div>
-								</div>
 
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
-									<div class="form-group-1">
-										<label for="expedido">Expedido<span class="text-danger">*</span></label>
-										<select id="expedido" name="expedido" class="form-select" required>
-                                                <option value=""></option>
-                                                <option value="LP" selected>LP</option>
-                                                <option value="CH">CH</option>
-                                                <option value="CB">CB</option>
-                                                <option value="OR">OR</option>
-                                                <option value="PT">PT</option>
-                                                <option value="TJ">TJ</option>
-                                                <option value="SC">SC</option>
-                                                <option value="BE">BE</option>
-                                                <option value="PD">PD</option>
-												<option value="QR">QR</option>
-                                            </select>
-									</div>
-								</div>
 
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
+								<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="form-group-1">
-										<label for="nombre">Nombre(s) <span class="text-danger">*</span></label>
-										<input class="form-control" id="nombre" name="nombre" type="text" required>
+										<label for="nombre_persona">Nombre Completo <span class="text-danger">*</span></label>
+										<input class="form-control" id="nombre_persona" name="nombre_persona" type="text" required>
 									</div>
 								</div>
-
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
+								<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="form-group-1">
-										<label for="paterno">Paterno <span class="text-danger">*</span></label>
-										<input class="form-control" id="paterno" name="paterno" type="text" required>
+										<label for="materno">Tu Ciudad</label>
+										<select name="ciudad" id="ciudad" class="form-select" required>
+											<option value="">
+												<- Seleccione ->
+											</option>
+											<?php foreach ($ciudades as $ciudad) : ?>
+												<option value="<?= $ciudad->nombre_ciudad ?>">
+													<?= $ciudad->nombre_ciudad ?>
+												</option>
+											<?php endforeach ?>
+										</select>
+										<!-- <input class="form-control" id="materno" name="materno" type="text"> -->
 									</div>
 								</div>
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
-									<div class="form-group-1">
-										<label for="materno">Materno</label>
-										<input class="form-control" id="materno" name="materno" type="text">
-									</div>
-								</div>
-								<div class="col-12 col-sm-12 col-md-6 col-lg-4">
+								<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="form-group-1">
 										<label for="celular">Celular (WhatsApp) <span class="text-danger">*</span></label>
 										<div class="input-group">
-											<input class="form-control" id="celular" name="celular" type="text" required style="width: 20px;">
+											<input class="form-control" id="celular" name="celular" type="number" required style="width: 20px;" min="60000000" max="79999999">
 											<!-- <a href="javascript:void(0)" class="enviar-whatsapp"><span class="input-group-text pe-auto">
 													<i class="lni lni-whatsapp"></i>
 												</span>
@@ -168,6 +160,15 @@
 										</div>
 									</div>
 								</div>
+
+								<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+									<div class="form-group-1">
+										<label for="correo">Correo <small>(opcional)</small></label>
+										<input class="form-control" id="correo" name="correo" type="email">
+									</div>
+								</div>
+
+
 							</div>
 
 							<div class="row">
@@ -187,38 +188,59 @@
 							</div>
 
 							<div class="row">
-								<div class="col-12 col-sm-12 col-md-12 col-lg-12" style="margin-left: 10px;">
+								<div class="col-lg-6 col-12">
+									<div class="form-check">
+										<input type="checkbox" class="form-check-input width-auto" id="marcarTodo" value="Marcar Todo">
+										<label class="form-check-label" for="marcarTodo">Marcar Todo</label>
+									</div>
+									<hr>
+
+								</div>
+								<div class="col-12 col-sm-12 col-md-12 col-lg-12">
 
 									<div class="col-lg-6 col-12">
 										<div class="form-check">
-											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Contenido" required>
-											<label class="form-check-label">Contenido</label>
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" id="check-input1" value="Contenido" required>
+											<label class="form-check-label" for="check-input1">Contenido</label>
 										</div>
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="form-check">
-											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Precio" required>
-											<label class="form-check-label">Precio</label>
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" id="check-input2" value="Precio" required>
+											<label class="form-check-label" for="check-input2">Precio</label>
 										</div>
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="form-check">
-											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Duración" required>
-											<label class="form-check-label">Duración</label>
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" id="check-input3" value="Duración" required>
+											<label class="form-check-label" for="check-input3">Duración</label>
 										</div>
 									</div>
 									<div class="col-lg-6 col-12">
 										<div class="form-check">
-											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" value="Requisitos mínimos" required>
-											<label class="form-check-label" for="informacion">Requisitos mínimos</label>
+											<input type="checkbox" class="form-check-input checkboxes width-auto" name="informacion[]" id="check-input4" value="Requisitos mínimos" required>
+											<label class="form-check-label" for="check-input4">Requisitos mínimos</label>
 										</div>
-										<hr>
 									</div>
-									<div class="col-lg-6 col-12">
-										<div class="form-check">
-											<input type="checkbox" class="form-check-input width-auto" id="marcarTodo" value="Marcar Todo">
-											<label class="form-check-label">Marcar Todo</label>
-										</div>
+
+								</div>
+								<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+									<div class="form-group-1">
+										<label for="otra_info">Otra Informacion <small>(opcional)</small></label>
+										<input class="form-control" id="otra_info" name="otra_info" type="text">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6 col-12">
+									<div class="form-group">
+										<label>Captcha</label>
+									</div>
+									<div class="input-group">
+										<input type="hidden" name="codigo_captcha" id="codigo_captcha" value="QPW">
+
+										<img src="" alt="" id="img_captcha">
+										<input name="captcha" type="number" placeholder="" id="input_captcha" class="input-captcha form-control" required="required">
 									</div>
 								</div>
 							</div>
@@ -264,8 +286,8 @@
 
 				<div id="modal-footer" class="modal-footer">
 					<div class="button d-flex align-items-center">
-						<button id="btn-enviar-informacion-programa" class="btn btn-info" type="submit" class="btn btn-primary"><i class="lni lni-arrow-right-circle" id="icono-enviar-formulario"></i> Recibir Información<small id="porcentaje-enviar-formulario"></small></button>
-						<button type="button" class="btn btn-secondary enviar-whatsapp" style="margin-left: 2px;">Contacto Coordinador</button>
+						<button id="btn-enviar-informacion-programa" class="btn btn-info" type="submit" class="btn btn-primary"><i class="lni lni-arrow-right-circle" id="icono-enviar-formulario"></i> Solicitar Información<small id="porcentaje-enviar-formulario"></small></button>
+						<!-- <button type="button" class="btn btn-secondary enviar-whatsapp" style="margin-left: 2px;">Contacto Coordinador</button> -->
 					</div>
 				</div>
 			</form>
@@ -313,6 +335,8 @@
 											<option value="SC">SC</option>
 											<option value="BE">BE</option>
 											<option value="PD">PD</option>
+											<option value="QR">QR</option>
+
 										</select>
 									</div>
 								</div>
@@ -422,6 +446,8 @@
 											<option value="SC">SC</option>
 											<option value="BE">BE</option>
 											<option value="PD">PD</option>
+											<option value="QR">QR</option>
+
 										</select>
 									</div>
 								</div>

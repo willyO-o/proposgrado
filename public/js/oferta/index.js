@@ -1,212 +1,268 @@
 $.expander.defaults.slicePoint = 120;
-document.addEventListener("DOMContentLoaded", function () {
-  $(".informacion-programa").on("click", function (e) {
-    e.preventDefault();
-    parametrosModal("modal", "Formulario de solicitud de información");
-    $("#detalle-programa").html($(this).data("detalle"));
-    $("#id_publicacion").val($(this).data("id-publicacion"));
-  });
-  $("#suscribirse").on("click", function (e) {
-    e.preventDefault();
-    parametrosModal("suscripcion-area", "Formulario de suscripción a un Area");
-  });
+document.addEventListener("DOMContentLoaded", function() {
 
-  $("div.expandable h5").expander({
-    slicePoint: 35, // default is 100
-    expandPrefix: '<small class="small fw-lighter fs-6 text-info">...</small>', // default is '... '
-    expandText:
-      '<small class="small fw-lighter fs-6 text-info">leer mas</small>', // default is 'read more'
-    collapseTimer: 5000, // re-collapses after 5 seconds; default is 0, so no re-collapsing
-    userCollapseText:
-      '<small class="small fw-lighter fs-6 text-info">ocultar</small>', // default is 'read less'
-  });
-  Inputmask.extendDefaults({ placeholder: "" });
-  $("#ci").inputmask("[9{6,9}][-*{1,2}]");
-  //
-  // Inputmask.extendDefinitions({
-  // 	A: {
-  // 		validator: '[A-Z0-9 ]',
-  // 		cardinality: 1,
-  // 	},
-  // });
 
-  $("#paterno").inputmask("A{1,20} A{1,20} A{1,20}");
-  $("#materno").inputmask("A{1,20} A{1,20} A{1,20}");
-  $("#nombre").inputmask("A{1,20} A{1,20} A{1,20}");
-  $("#celular").inputmask("9{8,8}");
 
-  // $('#correo').inputmask({
-  // 	mask: '*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]',
-  // 	greedy: false,
-  // 	onBeforePaste: function (pastedValue, opts) {
-  // 		pastedValue = pastedValue.toLowerCase();
-  // 		return pastedValue.replace('mailto:', '');
-  // 	},
-  // 	definitions: {
-  // 		'*': {
-  // 			validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~-]",
-  // 			casing: 'lower',
-  // 		},
-  // 	},
-  // });
-  $("#btn-enviar-informacion-programa").on("click", function (e) {
-    $("#form-informacion-programa").addClass("was-validated");
-  });
-  $("#btn-enviar-informacion-suscripcion-area").on("click", function (e) {
-    $("#form-suscripcion-area").addClass("was-validated");
-  });
-  $("#form-informacion-programa").ajaxForm({
-    // data: new FormData($(this)[0]),
-    beforeSend: function () {
-      parametrosEnvio(false, "icono-enviar-formulario");
-    },
-    uploadProgress: function (event, position, total, percentComplete) {
-      $("#porcentaje-enviar-formulario").html(`${percentComplete}%`);
-    },
-    complete: function (r) {},
-    success: function (r) {
-      if (typeof r.exito !== "undefined") {
-        Swal.fire({ icon: "success", title: "INFORMACIÓN", text: r.exito });
-        $("#modal").modal("hide");
-        $("#form-informacion-programa").clearForm();
-        $("#form-informacion-programa").removeClass("was-validated");
-        parametrosEnvio(true, "icono-enviar-formulario");
 
-        if (typeof r.message !== "undefined") {
-          window.open(
-            `https://api.whatsapp.com/send?phone=+591${
-              r.celular
-            }&text=${encodeURI(`
-				${r.message}
-					`)}`,
-            "_blank"
-          );
-        }
-      }
+            $(".informacion-programa").on("click", function(e) {
+                e.preventDefault();
+                parametrosModal("modal", "Formulario de solicitud de información");
+                $("#detalle-programa").html($(this).data("detalle"));
+                $("#id_publicacion").val($(this).data("id-publicacion"));
+            });
+            $("#suscribirse").on("click", function(e) {
+                e.preventDefault();
+                parametrosModal("suscripcion-area", "Formulario de suscripción a un Area");
+            });
 
-      if (typeof r.error !== "undefined") {
-      	Swal.fire({
-      		title: 'INFORMACIÓN',
-      		icon: 'error',
-      		html: r.error,
-      		showCloseButton: true,
-      		focusConfirm: false,
-      	});
+            $("div.expandable h5").expander({
+                slicePoint: 35, // default is 100
+                expandPrefix: '<small class="small fw-lighter fs-6 text-info">...</small>', // default is '... '
+                expandText: '<small class="small fw-lighter fs-6 text-info">leer mas</small>', // default is 'read more'
+                collapseTimer: 5000, // re-collapses after 5 seconds; default is 0, so no re-collapsing
+                userCollapseText: '<small class="small fw-lighter fs-6 text-info">ocultar</small>', // default is 'read less'
+            });
+            Inputmask.extendDefaults({ placeholder: "" });
+            $("#ci").inputmask("[9{6,9}][-*{1,2}]");
+            //
+            // Inputmask.extendDefinitions({
+            // 	A: {
+            // 		validator: '[A-Z0-9 ]',
+            // 		cardinality: 1,
+            // 	},
+            // });
 
-      	parametrosEnvio(true, 'icono-enviar-formulario');
-      	$('#porcentaje-enviar-formulario').html('');
-      }
-    },
-    error: function () {
-      parametrosEnvio(true, "icono-enviar-formulario");
-      $("#porcentaje-enviar-formulario").html("");
-    },
-  });
+            $("#paterno").inputmask("A{1,20} A{1,20} A{1,20}");
+            $("#materno").inputmask("A{1,20} A{1,20} A{1,20}");
+            $("#nombre").inputmask("A{1,20} A{1,20} A{1,20}");
+            $("#celular").inputmask("9{8,8}");
 
-  $("#form-suscripcion-area").ajaxForm({
-    // data: new FormData($(this)[0]),
-    beforeSend: function () {
-      parametrosEnvio(false, "icono-enviar-formulario-suscripcion-area");
-    },
-    uploadProgress: function (event, position, total, percentComplete) {
-      $("#porcentaje-enviar-formulario-area").html(`${percentComplete}%`);
-    },
-    complete: function (r) {},
-    success: function (r) {
-      if (typeof r.exito !== "undefined") {
-        Swal.fire({ icon: "success", title: "INFORMACIÓN", text: r.exito });
-        $("#suscripcion-area").modal("hide");
-        $("#form-suscripcion-area").clearForm();
-        $("#form-suscripcion-area").removeClass("was-validated");
-        parametrosEnvio(true, "icono-enviar-formulario-suscripcion-area");
-      } else if (typeof r.error) {
-        Swal.fire({
-          title: "INFORMACIÓN",
-          icon: "error",
-          html: r.error,
-          showCloseButton: true,
-          focusConfirm: false,
-        });
+            // $('#correo').inputmask({
+            // 	mask: '*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]',
+            // 	greedy: false,
+            // 	onBeforePaste: function (pastedValue, opts) {
+            // 		pastedValue = pastedValue.toLowerCase();
+            // 		return pastedValue.replace('mailto:', '');
+            // 	},
+            // 	definitions: {
+            // 		'*': {
+            // 			validator: "[0-9A-Za-z!#$%&'*+/=?^_`{|}~-]",
+            // 			casing: 'lower',
+            // 		},
+            // 	},
+            // });
+            $("#btn-enviar-informacion-programa").on("click", function(e) {
+                $("#form-informacion-programa").addClass("was-validated");
+            });
+            $("#btn-enviar-informacion-suscripcion-area").on("click", function(e) {
+                $("#form-suscripcion-area").addClass("was-validated");
+            });
 
-        parametrosEnvio(true, "icono-enviar-formulario-suscripcion-area");
-        $("#porcentaje-enviar-formulario-area").html("");
-      }
-    },
-    error: function () {
-      parametrosEnvio(true, "icono-enviar-formulario-suscripcion-area");
-      $("#porcentaje-enviar-formulario-area").html("");
-    },
-  });
 
-  const parametrosEnvio = (activarDesactivar, iconoEnviarFormulario) => {
-    e = $(`#${iconoEnviarFormulario}`);
-    e.removeClass();
-    if (activarDesactivar) {
-      e.addClass("lni lni-arrow-right-circle");
-      e.parent().attr("disabled", false);
-    } else {
-      e.addClass("lni lni-reload");
-      e.parent().attr("disabled", true);
-    }
-  };
 
-  // modal suscripción area
-  $(".sucripcion_area").on("click", function (e) {
-    e.preventDefault();
-    parametrosModal(
-      "modal",
-      "Formulario de solicitud de información de una área"
-    );
-  });
+            $("#form-informacion-programa").ajaxForm({
+                // data: new FormData($(this)[0]),
+                beforeSend: function() {
+                    parametrosEnvio(false, "icono-enviar-formulario");
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                    $("#porcentaje-enviar-formulario").html(`${percentComplete}%`);
+                },
+                complete: function(r) {},
+                success: function(r) {
+                    if (r.exito) {
+                        // Swal.fire({ icon: "success", title: "INFORMACIÓN", text: r.mensaje || "Solicitud Registrada, " });
+                        const swalWithBootstrapButtons = Swal.mixin({
+                            customClass: {
+                                confirmButton: 'btn btn-success',
+                                cancelButton: 'btn btn-danger'
+                            },
+                            buttonsStyling: false
+                        })
 
-  var words = [];
-  let eliminado = [];
+                        if (r.programa != null) {
 
-  // $('#id_area').on('change', function (e) {
-  // 	let id = $(this).val();
-  // 	eliminado = [];
-  // 	$.ajax({
-  // 		type: 'POST',
-  // 		url: '/oferta/verificar_etiqueta',
-  // 		data: { id, todos: 'no' },
-  // 	}).done(function (data) {
-  // 		// console.log(data);
-  // 		words = JSON.parse(JSON.stringify(data));
-  // 		$('#demo').jQCloud('update', words);
-  // 	});
+                            swalWithBootstrapButtons.fire({
+                                title: 'Listo...',
+                                html: r.mensaje || 'Registrado Exitosamente...',
+                                icon: 'success',
+                                showCancelButton: true,
+                                confirmButtonText: '<i class="lni lni-whatsapp"></i> Contactar al coordinador',
+                                confirmButtonColor: "#01ac00",
+                                cancelButtonText: 'Cerrar',
+                                reverseButtons: true
+                            }).then((result) => {
+                                if (result.isConfirmed) {
+                                    let mensaje_wp = `https://api.whatsapp.com/send?phone=+591${r.programa.celular_coordinador}&text=Hola, necesito mas información sobre ${r.solicitud.tipo_informacion_solicitada} ${r.solicitud.otra_informacion ? " y " + r.solicitud.otra_informacion : ""} del Programa ${r.programa.grado_academico} EN ${r.programa.nombre_programa}, MODALIDAD ${r.programa.modalidad}, VERSIÓN ${r.programa.numero_version}. https://posgrado.upea.bo/programa/${r.programa.id_publicacion}`;
 
-  // 	console.log($(this).val());
-  // });
-  $(".enviar-whatsapp").on("click", function () {
-    $.get(
-      `/oferta/detalleProgramaJson/id_publicacion,nombre_programa,descripcion_whatsapp,celular_coordinador,grado_academico,nombre_programa,numero_version,id_publicacion,modalidad/${$(
+
+                                    var win = window.open(
+                                        mensaje_wp,
+                                        "_blank"
+                                    );
+
+                                    win.focus();
+                                } else if (result.dismiss === Swal.DismissReason.cancel) {
+
+                                }
+                            })
+                        } else {
+                            Swal.fire({
+                                title: 'Listo...',
+                                html: r.mensaje || 'Registrado Exitosamente...',
+                                icon: 'success',
+                            });
+                        }
+                        $("#modal").modal("hide");
+                        $("#ciudad").val(null).trigger("change");;
+                        $("#form-informacion-programa").clearForm();
+                        $("#form-informacion-programa").removeClass("was-validated");
+                        parametrosEnvio(true, "icono-enviar-formulario");
+                        generar_captcha();
+
+                    } else {
+
+                        let mensaje = "";
+                        if (r.error) {
+
+                            let valores = Object.values(r.error); // valores = ["Scott", "Negro", true, 5];
+                            for (let i = 0; i < valores.length; i++) {
+                                mensaje += "<p>" + valores[i] + "</p> ";
+                            }
+                        } else {
+                            mensaje = r.mensaje
+                        }
+
+                        Swal.fire({
+                            title: 'INFORMACIÓN',
+                            icon: 'Error',
+                            html: mensaje || "No se pudo procesar su solicitud, por favor verifique sus datos e intente nuevamente.",
+                            showCloseButton: true,
+                            focusConfirm: false,
+                        });
+
+                        parametrosEnvio(true, 'icono-enviar-formulario');
+                        $('#porcentaje-enviar-formulario').html('');
+                    }
+
+                    if (r.captcha == false) {
+                        generar_captcha();
+                    }
+                },
+                error: function() {
+                    parametrosEnvio(true, "icono-enviar-formulario");
+                    $("#porcentaje-enviar-formulario").html("");
+                },
+            });
+
+
+
+
+
+            $("#form-suscripcion-area").ajaxForm({
+                // data: new FormData($(this)[0]),
+                beforeSend: function() {
+                    parametrosEnvio(false, "icono-enviar-formulario-suscripcion-area");
+                },
+                uploadProgress: function(event, position, total, percentComplete) {
+                    $("#porcentaje-enviar-formulario-area").html(`${percentComplete}%`);
+                },
+                complete: function(r) {},
+                success: function(r) {
+                    if (typeof r.exito !== "undefined") {
+                        Swal.fire({ icon: "success", title: "INFORMACIÓN", text: r.exito });
+                        $("#suscripcion-area").modal("hide");
+                        $("#form-suscripcion-area").clearForm();
+                        $("#form-suscripcion-area").removeClass("was-validated");
+                        parametrosEnvio(true, "icono-enviar-formulario-suscripcion-area");
+                    } else if (typeof r.error) {
+                        Swal.fire({
+                            title: "INFORMACIÓN",
+                            icon: "error",
+                            html: r.error,
+                            showCloseButton: true,
+                            focusConfirm: false,
+                        });
+
+                        parametrosEnvio(true, "icono-enviar-formulario-suscripcion-area");
+                        $("#porcentaje-enviar-formulario-area").html("");
+                    }
+                },
+                error: function() {
+                    parametrosEnvio(true, "icono-enviar-formulario-suscripcion-area");
+                    $("#porcentaje-enviar-formulario-area").html("");
+                },
+            });
+
+            const parametrosEnvio = (activarDesactivar, iconoEnviarFormulario) => {
+                e = $(`#${iconoEnviarFormulario}`);
+                e.removeClass();
+                if (activarDesactivar) {
+                    e.addClass("lni lni-arrow-right-circle");
+                    e.parent().attr("disabled", false);
+                } else {
+                    e.addClass("lni lni-reload");
+                    e.parent().attr("disabled", true);
+                }
+            };
+
+            // modal suscripción area
+            $(".sucripcion_area").on("click", function(e) {
+                e.preventDefault();
+                parametrosModal(
+                    "modal",
+                    "Formulario de solicitud de información de una área"
+                );
+            });
+
+            var words = [];
+            let eliminado = [];
+
+            // $('#id_area').on('change', function (e) {
+            // 	let id = $(this).val();
+            // 	eliminado = [];
+            // 	$.ajax({
+            // 		type: 'POST',
+            // 		url: '/oferta/verificar_etiqueta',
+            // 		data: { id, todos: 'no' },
+            // 	}).done(function (data) {
+            // 		// console.log(data);
+            // 		words = JSON.parse(JSON.stringify(data));
+            // 		$('#demo').jQCloud('update', words);
+            // 	});
+
+            // 	console.log($(this).val());
+            // });
+            $(".enviar-whatsapp").on("click", function() {
+                $.get(
+                    `/oferta/detalleProgramaJson/id_publicacion,nombre_programa,descripcion_whatsapp,celular_coordinador,grado_academico,nombre_programa,numero_version,id_publicacion,modalidad/${$(
         "#id_publicacion"
       ).val()}`,
-      function (r) {
-        window.open(
-          `https://api.whatsapp.com/send?phone=+591${r.celular_coordinador}&text=Hola, necesito mas información del Programa ${r.grado_academico} EN ${r.nombre_programa}, MODALIDAD ${r.modalidad}, VERSIÓN ${r.numero_version}. https://posgrado.upea.bo/programa/${r.id_publicacion}`,
-          "_blank"
-        );
-      }
-    ).fail(function (xhr, textStatus, errorThrown) {
-      Swal.fire({
-        icon: "error",
-        title: "ERROR",
-        text: "No se pudo enviar el mensaje",
-      });
-    });
-    // if (/^\d{8}$/.test($('#celular').val()) && /^\d+$/.test($('#id_publicacion').val())) {
-    // 	$.get(`/oferta/detalleProgramaJson/id_publicacion,nombre_programa,descripcion_whatsapp/${$('#id_publicacion').val()}`, function (r) {
-    // 		window.open(`https://api.whatsapp.com/send?phone=+591${$('#celular').val()}&text=${r.descripcion_whatsapp}`, '_blank');
-    // 	}).fail(function (xhr, textStatus, errorThrown) {
-    // 		Swal.fire({ icon: 'error', title: 'ERROR', text: 'No se pudo enviar el mensaje' });
-    // 	});
-    // } else Swal.fire({ icon: 'error', title: 'INFORMACIÓN', text: 'El celular no es válido' });
-  });
-  $("#enviar-whatsapp-area").on("click", function () {
-    if (/^\d{8}$/.test($("#celular-area").val())) {
-      window.open(
-        `https://api.whatsapp.com/send?phone=+591${$(
+                    function(r) {
+                        window.open(
+                            `https://api.whatsapp.com/send?phone=+591${r.celular_coordinador}&text=Hola, necesito mas información del Programa ${r.grado_academico} EN ${r.nombre_programa}, MODALIDAD ${r.modalidad}, VERSIÓN ${r.numero_version}. https://posgrado.upea.bo/programa/${r.id_publicacion}`,
+                            "_blank"
+                        );
+                    }
+                ).fail(function(xhr, textStatus, errorThrown) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "ERROR",
+                        text: "No se pudo enviar el mensaje",
+                    });
+                });
+                // if (/^\d{8}$/.test($('#celular').val()) && /^\d+$/.test($('#id_publicacion').val())) {
+                // 	$.get(`/oferta/detalleProgramaJson/id_publicacion,nombre_programa,descripcion_whatsapp/${$('#id_publicacion').val()}`, function (r) {
+                // 		window.open(`https://api.whatsapp.com/send?phone=+591${$('#celular').val()}&text=${r.descripcion_whatsapp}`, '_blank');
+                // 	}).fail(function (xhr, textStatus, errorThrown) {
+                // 		Swal.fire({ icon: 'error', title: 'ERROR', text: 'No se pudo enviar el mensaje' });
+                // 	});
+                // } else Swal.fire({ icon: 'error', title: 'INFORMACIÓN', text: 'El celular no es válido' });
+            });
+            $("#enviar-whatsapp-area").on("click", function() {
+                        if (/^\d{8}$/.test($("#celular-area").val())) {
+                            window.open(
+                                    `https://api.whatsapp.com/send?phone=+591${$(
           "#celular-area"
         ).val()}&text=${encodeURI(`
 			Sea usted bienvenid@ a *POSGRADO UPEA*
@@ -304,4 +360,28 @@ document.addEventListener("DOMContentLoaded", function () {
       checkboxes.attr("required", "required");
     }
   });
+
+  $("#ciudad").select2({
+    dropdownParent: $("#modal #modal-body")
+  });
+
+
+  generar_captcha();
+
+  function generar_captcha() {
+    $.post("/informacion/informacion_generar_captcha", {})
+      .done(function (response) {
+
+        $("#codigo_captcha").attr("value", response.captcha.codigo);
+        $("#img_captcha").attr("src", response.captcha.ruta);
+        $("#input_captcha").val("");
+      });
+  }
+
+  $("#form-informacion-programa #celular").on("input", function () {
+    if ($(this).val().length > 8) {
+      $(this).val($(this).val().slice(0, 8))
+    }
+  });
+
 });

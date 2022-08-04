@@ -1,0 +1,72 @@
+#form-informacion .form-select {
+    width: 100%;
+    min-height: 52px;
+    border: 1px solid #eee;
+    color: #081828;
+}
+
+#form-informacion input[type="checkbox"] {
+    width: 1em;
+    height: 1em;
+    margin-top: 0.25em;
+    vertical-align: top;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border: 1px solid rgba(0, 0, 0, .25);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    min-height: 0px;
+    padding: 0;
+}
+
+#form-informacion input[type="checkbox"]:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+#form-informacion .input-captcha {
+    flex: 1 1 auto;
+    min-height: 37px;
+    border: 1px solid #eee;
+    color: #081828;
+    padding: 0.5em;
+    background-color: #f5f5f5;
+    padding-left: 20px;
+}
+
+#img_captcha {
+    /* min-height: 52px; */
+}
+
+
+/* #form-informacion .select2-container .select2-selection--single {
+    min-height: 52px;
+    border: solid 1px #eee;
+}
+
+#form-informacion .select2-container--default .select2-selection--single .select2-selection__rendered {
+    height: 45px !important;
+}
+
+#form-informacion span.selection {
+    display: block !important;
+}
+
+.select2-container--open .select2-dropdown--below {
+    width: auto;
+} */
+
+#form-informacion input[type=number]::-webkit-inner-spin-button,
+#form-informacion input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#form-informacion input[type=number] {
+    -moz-appearance: textfield;
+}

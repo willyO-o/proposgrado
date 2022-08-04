@@ -48,7 +48,7 @@
                                     </ul>
                                 </li>
                                 <!-- <li class="nav-item"><a href="/inicio/testimonios"><?= lang('global.testimonios') ?></a></li> -->
-                                <li class="nav-item"><a href="/inicio/contacto"><?= lang('global.contacto') ?></a></li>
+                                <li class="nav-item"><a href="/informacion"><?= lang('global.informacion') ?></a></li>
                             </ul>
                             <!--<form class="d-flex search-form">
                                 <input class="form-control me-2" type="search" placeholder="<?php // lang('global.buscar') 

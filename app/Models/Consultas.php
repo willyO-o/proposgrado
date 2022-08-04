@@ -59,6 +59,7 @@ class Consultas extends Database
                 foreach ($this->distintoTabla('pagina_web.psg_publicacion', 'grado_academico') as $key => $value) {
                     $builder = $this->db->table('pagina_web.psg_publicacion p')->select("*, ($afiche_programa  where id_publicacion = p.id_publicacion limit 1), ($infograma_programa and id_publicacion = p.id_publicacion limit 1),  ($descripcion_programa where id_publicacion = p.id_publicacion limit 1)")
                         ->join('gestion g', 'g.id_gestion =  p.id_gestion', 'left')
+                        ->join('persona per', 'p.id_responsable_interno =  per.id_persona', 'left')
                         ->where(['grado_academico' => $value]);
                     if (!empty(IDSEDE)) {
                         $builder->where(array('sede' => SEDE));

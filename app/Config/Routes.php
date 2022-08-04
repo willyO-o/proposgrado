@@ -35,6 +35,7 @@ $routes->get('/', 'Oferta::index');
 $routes->add('inscripcion/(:num)/(:segment)', 'Inscripcion::formulario/$1/$2');
 $routes->add('verificar/(:num)', 'Inscripcion::formulario/$1');
 $routes->add('programa/(:num)', 'Oferta::detalle/$1');
+$routes->get('informacion/(:num)', 'Informacion::index/$1');
 // $routes->add('descargar_programa/(:num)', 'Oferta::descargarArchivosPrograma/$1');
 
 /*
