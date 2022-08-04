@@ -1,6 +1,7 @@
 /app/Config/App.php
 /app/Config/Database.php
 /public/imagenes/afiches/
+/public/imagenes/captchas/
 /.git/
 */config/development
 */logs/log-*.php
@@ -163,7 +164,6 @@ application/vendor/*
 /public_html/UUjHSz1y6zu0mvczJhgntEcsh3SQ/pago_programa
 /public_html/UUjHSz1y6zu0mvczJhgntEcsh3SQ/respaldo_programa
 /public_html/img/foto_persona
-/public_html/imagenes/captchas
 
 # for Visual Studio Code
 .vscode/*
