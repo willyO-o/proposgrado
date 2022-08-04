@@ -35,15 +35,70 @@
                         <?php elseif ($mensaje['estado'] == 'no_esta_inscrito') : ?>
                             <div class="row">
                                 <div class="col-12">
-                                    <h5>¿Cuenta con el deposito?</h5>
+                                    <h5>Deposito Bancario</h5>
+                                    <p class="text-danger">Los depositos bancarios deben ser por concepto de Matricula <?= $publicacion['monto_matricula'] ?> Bs., tambien puede adjuntar su deposito del primer pago de su colegiatura.</p>
                                 </div>
-                                <div class="col-6 text-center">
-                                    <label for="tiene-deposito">Si tengo</label>
-                                    <input type="radio" name="tiene_deposito" id="tiene-deposito" value="tiene-deposito" required>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <label for="no-tiene-deposito">No tengo</label>
-                                    <input type="radio" name="tiene_deposito" id="no-tiene-deposito" value="no-tiene-deposito" required>
+                                <div id="depositos">
+                                    <div id="contenedor-deposito-matricula">
+                                        <div class="row elemento-matricula" id="elemento-matricula-1">
+
+                                            <div class="col-11 col-xl-11">
+                                                <div class="row col">
+                                                    <div class="form-group-1">
+                                                        <label for="tipo_deposito_matricula[]">Tipo Deposito</label>
+                                                        <select class="form-select form-control" id="tipo_deposito_matricula[]" name="tipo_deposito_matricula[]" required="">
+                                                            <!-- <option value="" disabled>Seleccione</option> -->
+                                                            <option value="1" selected>PAGO POR MATRICULACION</option>
+                                                            <!-- <option value="2" disabled>PAGO POR COLEGIATURA</option> -->
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12 col-xl-4">
+                                                        <div class="form-group-1">
+                                                            <label for="numero_deposito_matricula[]">Nro Deposito</label>
+                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="15" maxlength="15" required="" inputmode="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-xl-5">
+                                                        <div class="form-group-1">
+                                                            <label for="fecha_deposito_matricula[]">Fecha Deposito</label>
+                                                            <input class="p-0 form-control" id="fecha_deposito_matricula[]" name="fecha_deposito_matricula[]" value="<?= date("Y-m-d") ?>" type="date" required="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-xl-3">
+                                                        <div class="form-group-1">
+                                                            <label for="monto_matricula[]">Monto (Bs.)</label>
+                                                            <input class="p-0 form-control" id="monto_matricula[]" name="monto_matricula[]" type="text" required="" value="<?= $publicacion['monto_matricula'] ?>" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-sm-12 col-md-6 col-xl-6 border">
+                                                        <img class="w-100 img-fluid prev_matricula" src="https://proposgrado1.upea.bo/edugrids/assets/images/svg/upload-alt.svg" alt="Seleccione imagen_matricula[]" style="cursor:pointer">
+                                                        <input class="form-control" type="file" id="imagen_matricula[]" name="imagen_matricula[]" accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG">
+                                                        <p class="text-dark fw-bold text-center">Seleccione imagen</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-1 col-xl-1">
+
+                                            </div>
+                                            <hr>
+                                            <input id="tiene_respaldo[]" name="tiene_respaldo[]" type="hidden" value="false">
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="button d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button id="btn-agregar-deposito-matricula" class="btn p-1 pt-0 pb-0"> Agregar mas depositos</button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                             <hr>
@@ -61,6 +116,7 @@
                                             <label for="expedido">Expedido en</label>
                                             <select id="expedido" name="expedido" class="form-select" required>
                                                 <option value=""></option>
+                                                <option value="QR">QR</option>
                                                 <option value="LP" selected>LP</option>
                                                 <option value="CH">CH</option>
                                                 <option value="CB">CB</option>
@@ -160,21 +216,76 @@
                             <hr>
                             <div class="row">
                                 <div class="col-12">
-                                    <h5>¿Cuenta con el deposito Bancario?</h5>
+                                    <h5>Deposito Bancario</h5>
                                     <p class="text-danger">Los depositos bancarios deben ser por concepto de Matricula <?= $publicacion['monto_matricula'] ?> Bs., tambien puede adjuntar su deposito del primer pago de su colegiatura.</p>
                                 </div>
-                                <div class="col-6 text-center">
-                                    <label for="tiene-deposito">Si tengo el deposito Bancario</label>
-                                    <input type="radio" name="tiene_deposito" id="tiene-deposito" value="tiene-deposito" required>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <label for="no-tiene-deposito">No tengo el deposito Bancario</label>
-                                    <input type="radio" name="tiene_deposito" id="no-tiene-deposito" value="no-tiene-deposito" required>
+                                <div id="depositos">
+                                    <div id="contenedor-deposito-matricula">
+                                        <div class="row elemento-matricula" id="elemento-matricula-1">
+
+                                            <div class="col-11 col-xl-11">
+                                                <div class="row col">
+                                                    <div class="form-group-1">
+                                                        <label for="tipo_deposito_matricula[]">Tipo Deposito</label>
+                                                        <select class="form-select form-control" id="tipo_deposito_matricula[]" name="tipo_deposito_matricula[]" required="">
+                                                            <!-- <option value="" disabled>Seleccione</option> -->
+                                                            <option value="1" selected>PAGO POR MATRICULACION</option>
+                                                            <!-- <option value="2" disabled>PAGO POR COLEGIATURA</option> -->
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="row mt-2">
+                                                    <div class="col-12 col-xl-4">
+                                                        <div class="form-group-1">
+                                                            <label for="numero_deposito_matricula[]">Nro Deposito</label>
+                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="15" maxlength="15" required="" inputmode="text">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-xl-5">
+                                                        <div class="form-group-1">
+                                                            <label for="fecha_deposito_matricula[]">Fecha Deposito</label>
+                                                            <input class="p-0 form-control" id="fecha_deposito_matricula[]" name="fecha_deposito_matricula[]" value="<?= date("Y-m-d") ?>" type="date" required="">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-xl-3">
+                                                        <div class="form-group-1">
+                                                            <label for="monto_matricula[]">Monto (Bs.)</label>
+                                                            <input class="p-0 form-control" id="monto_matricula[]" name="monto_matricula[]" type="text" required="" value="<?= $publicacion['monto_matricula'] ?>" readonly>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col-sm-12 col-md-6 col-xl-6 border">
+                                                        <img class="w-100 img-fluid prev_matricula" src="https://proposgrado1.upea.bo/edugrids/assets/images/svg/upload-alt.svg" alt="Seleccione imagen_matricula[]" style="cursor:pointer">
+                                                        <input class="form-control" type="file" id="imagen_matricula[]" name="imagen_matricula[]" accept=".jpg, .jpeg, .png, .JPG, .JPEG, .PNG">
+                                                        <p class="text-dark fw-bold text-center">Seleccione imagen</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-1 col-xl-1">
+
+                                            </div>
+                                            <hr>
+                                            <input id="tiene_respaldo[]" name="tiene_respaldo[]" type="hidden" value="false">
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="row">
+                                        <div class="button d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button id="btn-agregar-deposito-matricula" class="btn p-1 pt-0 pb-0"> Agregar mas depositos</button>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
-                            <hr>
+
+
                         <?php endif; ?>
-                        <div id="depositos"></div>
+
 
                         <div class="row mt-3">
                             <div class="col-4 col-xl-4 button">

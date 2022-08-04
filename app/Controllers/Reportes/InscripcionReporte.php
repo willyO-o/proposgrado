@@ -15,7 +15,7 @@ class InscripcionReporte extends FpdfPsg
         $this->SetFillColor(255, 250, 142);
         $this->Image(FCPATH . "/imagenes/membrete.jpg", 0, 0, 216, 279);
         // $this->Image('https://chart.googleapis.com/chart?chs=100x100&cht=qr&chl=' . str_replace(' ', '_', ($doc['id_inscripcion_online'] . '/' . $doc['id_publicacion'] . '/' . $doc['ci'] . $doc['expedido'] . '/' . $doc['paterno'] . '/' . $doc['nombre'] . '.png')), 180, 230, 20);
-        $this->Image('http://localhost/gen_qr/qr_generator.php?code=' . str_replace(' ', '_', ($doc['id_inscripcion_online'] . '/' . $doc['id_publicacion'] . '/' . $doc['ci'] . $doc['expedido'] . '/' . $doc['paterno'] . '/' . $doc['nombre'] . '&.png')), 180, 230, 20);
+        $this->Image('http://localhost:90/gen_qr/qr_generator.php?code=' . str_replace(' ', '_', ($doc['id_inscripcion_online'] . '/' . $doc['id_publicacion'] . '/' . $doc['ci'] . $doc['expedido'] . '/' . $doc['paterno'] . '/' . $doc['nombre'] . '&.png')), 180, 230, 20);
         // $this->Image('http://barcode.tec-it.com/barcode.ashx?data=' . ($doc['id_inscripcion_online'] . '/' . $doc['id_publicacion'] . '/' . $doc['ci'] . $doc['expedido']) . '&code=Code128&dpi=96&dataseparator=', 120, 235, 50, 0, 'GIF');
 
         $this->SetFont('Arial', '', 18);
