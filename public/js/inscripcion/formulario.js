@@ -81,7 +81,7 @@ $(function() {
 				<div class="col-12 col-xl-4">
 					<div class="form-group-1">
 						<label for="${valores.numeroDeposito}">Nro Deposito</label>
-						<input class="p-0 form-control" id="${valores.numeroDeposito}" name="${valores.numeroDeposito}" type="text" minlength="15" required disabled>
+						<input class="p-0 form-control" id="${valores.numeroDeposito}" name="${valores.numeroDeposito}" type="text" minlength="4" required disabled>
 					</div>
 				</div>
 				<div class="col-12 col-xl-5">

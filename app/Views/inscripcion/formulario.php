@@ -57,7 +57,7 @@
                                                     <div class="col-12 col-xl-4">
                                                         <div class="form-group-1">
                                                             <label for="numero_deposito_matricula[]">Nro Deposito</label>
-                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="15" maxlength="15" required="" inputmode="text">
+                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="4" maxlength="15" required="" inputmode="text">
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-xl-5">
@@ -238,7 +238,7 @@
                                                     <div class="col-12 col-xl-4">
                                                         <div class="form-group-1">
                                                             <label for="numero_deposito_matricula[]">Nro Deposito</label>
-                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="15" maxlength="15" required="" inputmode="text">
+                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="4" maxlength="15" required="" inputmode="text">
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-xl-5">
