@@ -146,5 +146,15 @@ $(function() {
             });
     }
 
+    $("#marcarTodo").on("change", function() {
+        let checkboxes = $(".checkboxes");
+        if ($(this).is(":checked")) {
+            checkboxes.prop("checked", true);
+        } else {
+            checkboxes.prop("checked", false);
+            checkboxes.attr("required", "required");
+        }
+    });
+
 
 });

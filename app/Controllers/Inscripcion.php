@@ -49,6 +49,8 @@ class Inscripcion extends BaseController
 
 	public function inscribir()
 	{
+
+		header("Access-Control-Allow-Origin: https://devposgrado1.upea.bo");
 		// var_dump($_REQUEST);
 		// return var_dump($_FILES);
 		$carnet = str_replace(' ', '', $this->request->getPost('ci'));
@@ -65,7 +67,9 @@ class Inscripcion extends BaseController
 				$this->registrarDepositos($this->request, $inscripcion['id_inscripcion_online']);
 				return $this->response->setJSON(['exito' => "$nombreCompleto, ya se encuentra inscrito en el programa {$publicacion['nombre_programa']} ¿Desea ver sus cartas y formularios de su inscripción?.", 'idPersonaExterna' => md5($persona['id_persona_externa']), 'idPublicacion' => md5($idPublicacion)]);
 			} else {
-				$idInscripcionOnline = $this->inscribirInformar($idPublicacion, $persona['id_persona_externa'], $this->request->getVar('tipo_deposito_matricula') != null ? 'PREINSCRITO' : 'INTERESADO');
+				$tipoInscripcion = $this->request->getVar('tipo_inscripcion') != null ? 'SISTEMA' : 'PAGINA WEB';
+				$responsable = $this->nuloSiVacio($this->request->getVar('responsable'));
+				$idInscripcionOnline = $this->inscribirInformar($idPublicacion, $persona['id_persona_externa'], $this->request->getVar('tipo_deposito_matricula') != null ? 'PREINSCRITO' : 'INTERESADO', $tipoInscripcion, $responsable);
 				$this->registrarDepositos($this->request, $idInscripcionOnline);
 				return $this->response->setJSON(['exito' => "$nombreCompleto, se inscribio correctamente al programa {$publicacion['nombre_programa']}, descargue sus cartas y formularios de su inscripción", 'idPersonaExterna' => md5($persona['id_persona_externa']), 'idPublicacion' => md5($idPublicacion)]);
 			}
@@ -76,14 +80,14 @@ class Inscripcion extends BaseController
 				'id_publicacion' => ['label' => 'nro publicación', 'rules' => 'required|is_natural_no_zero'],
 				'ci' => ['label' => 'ci', 'rules' => 'required|max_length[10]|min_length[7]'],
 				'expedido' => ['label' => 'expedido', 'rules' => 'required|max_length[2]|min_length[2]'],
-				'paterno' => ['label' => 'paterno', 'rules' => 'required|min_length[3]|max_length[40]'],
+				'paterno' => ['label' => 'paterno', 'rules' => 'max_length[40]'],
 				'materno' => ['label' => 'materno', 'rules' => 'max_length[40]'],
 				'nombre' => ['label' => 'nombre', 'rules' => 'required|min_length[3]|max_length[40]'],
 				'genero' => ['label' => 'genero', 'rules' => 'required|min_length[1]|max_length[1]'],
 				'fecha_nacimiento' => ['label' => 'fecha nacimiento', 'rules' => 'required|fechaCorrecta|fechaPasada'],
 				'celular' => ['label' => 'celular', 'rules' => 'required|min_length[8]|max_length[8]|is_natural_no_zero'],
-				'correo' => ['label' => 'correo electronico', 'rules' => 'required|valid_email|max_length[40]'],
-				'oficio_trabajo' => ['label' => 'oficio trabajo', 'rules' => 'required|max_length[90]'],
+				'correo' => ['label' => 'correo electronico', 'rules' => 'max_length[40]'],
+				'oficio_trabajo' => ['label' => 'oficio trabajo', 'rules' => 'max_length[90]'],
 				'ciudad' => ['label' => 'ciudad', 'rules' => 'required|max_length[90]'],
 				'domicilio' => ['label' => 'domicilio', 'rules' => 'required|max_length[140]'],
 			]);
@@ -108,7 +112,9 @@ class Inscripcion extends BaseController
 					'estado_persona' => 'REGISTRADO'
 				]);
 				if (is_numeric($idPersona)) {
-					$idInscripcion = $this->inscribirInformar($idPublicacion, $idPersona, $this->request->getVar('tipo_deposito_matricula') != null ? 'PREINSCRITO' : 'INTERESADO');
+					$tipoInscripcion = $this->request->getVar('tipo_inscripcion') != null ? 'SISTEMA' : 'PAGINA WEB';
+					$responsable = $this->nuloSiVacio($this->request->getVar('responsable'));
+					$idInscripcion = $this->inscribirInformar($idPublicacion, $idPersona, $this->request->getVar('tipo_deposito_matricula') != null ? 'PREINSCRITO' : 'INTERESADO', $tipoInscripcion, $responsable);
 					if (is_numeric($idInscripcion)) {
 						$this->registrarDepositos($this->request, $idInscripcion);
 						return $this->response->setJSON(['exito' => "Se inscribio correctamente al programa {$publicacion['nombre_programa']}, descargue sus cartas y formularios de su inscripción", 'idPersonaExterna' => md5($idPersona), 'idPublicacion' => md5($idPublicacion)]);
@@ -409,12 +415,14 @@ DIPLOMADOS, ESPECIALIDADES, MAESTRIAS, DOCTORADOS Y POST DOCTORADOS visítenos e
 	{
 		return $this->response->setJSON($this->consultas->listarPublicacion('programa', ['id_publicacion' => $idPublicacion])->getRowArray());
 	}
-	public function inscribirInformar($idPublicacion, $idPersona, $estadoInscripcionOnline)
+	public function inscribirInformar($idPublicacion, $idPersona, $estadoInscripcionOnline, $tipoInscripcion = null, $responsable = null)
 	{
 		$idInscripcionOnline = $this->consultas->insertarTabla('inscripcion_online', [
 			'id_publicacion' => $idPublicacion,
 			'id_persona_interesado' => $idPersona,
-			'estado_inscripcion_online' => $estadoInscripcionOnline
+			'estado_inscripcion_online' => $estadoInscripcionOnline,
+			'tipo_inscripcion' => $tipoInscripcion,
+			'id_usuario_registro' => $responsable,
 		]);
 		return $idInscripcionOnline;
 	}

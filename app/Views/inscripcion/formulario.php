@@ -137,7 +137,7 @@
                                     <div class="col-sm-12 col-md-6 col-lg-4">
                                         <div class="form-group-1">
                                             <label for="paterno">Paterno</label>
-                                            <input class="form-control" id="paterno" name="paterno" type="text" required>
+                                            <input class="form-control" id="paterno" name="paterno" type="text" >
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-lg-4">
@@ -182,7 +182,7 @@
                                     <div class="col-12 col-xl-8">
                                         <div class="form-group-1">
                                             <label for="correo">Correo</label>
-                                            <input class="form-control text-lowercase" id="correo" name="correo" type="text" onkeyup="this.value = this.value.toUpperCase();" required>
+                                            <input class="form-control text-lowercase" id="correo" name="correo" type="email" onkeyup="this.value = this.value.toUpperCase();" >
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +190,7 @@
                                     <div class="col-12 col-xl-7">
                                         <div class="form-group-1">
                                             <label for="oficio_trabajo">Oficio de trabajo</label>
-                                            <input class="form-control" id="oficio_trabajo" name="oficio_trabajo" type="text" required>
+                                            <input class="form-control" id="oficio_trabajo" name="oficio_trabajo" type="text" >
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-5">

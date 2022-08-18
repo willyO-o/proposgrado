@@ -4,10 +4,10 @@
             <div class="col-lg-8 col-md-12 col-12">
                 <div class="form-main">
                     <h3 class="title"><span>List@ para comenzar?</span>
-                        Solicitar Informacion
+                        Solicitar Informaci&oacuten
                         <?php if ($programa) : ?>
-                            para 
-                           <?= $programa ?>
+                            para
+                            <?= $programa ?>
                         <?php endif ?>
 
                         <span>los campos con <b class="text-danger font-weight-bold">*</b> son requeridos</span>
@@ -52,7 +52,7 @@
                             <div class="col-lg-6 col-12">
                                 <div class="form-group">
                                     <label>Tu Ciudad <span class="text-danger">*</span></label>
-                                    <select name="ciudad" id="ciudad" class="" required >
+                                    <select name="ciudad" id="ciudad" class="" required>
                                         <option value="">
                                             <- Seleccione ->
                                         </option>
@@ -71,8 +71,8 @@
 
                             <div class="col-lg-12 col-12 mb-3" id="caja-correo">
                                 <div class="form-check">
-                                    <input type="checkbox" id="check-correo" class="form-check-input checkboxes width-auto btn-collapse">
-                                    <label class="form-check-label btn-collapse" for="check-correo">Recibir Informacion a mi Correo</label>
+                                    <input type="checkbox" id="check-correo" class="form-check-input  width-auto btn-collapse">
+                                    <label class="form-check-label btn-collapse" for="check-correo">Recibir Informaci&oacuten a mi Correo</label>
                                 </div>
 
                                 <div class="collapse" id="mostrar-correo">
@@ -85,9 +85,15 @@
                             </div>
 
 
+
                             <div class="col-12">
                                 <div class="form-group message">
-                                    <label>Recibir Informacion sobre: <span class="text-danger">*</span></label>
+                                    <label>Recibir Informaci&oacuten sobre: <span class="text-danger">*</span></label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input width-auto" id="marcarTodo" value="Marcar Todo">
+                                        <label class="form-check-label" for="marcarTodo">Marcar Todo</label>
+                                    </div>
+                                    <hr>
                                     <div class="form-check">
                                         <input type="checkbox" id="check1" class="form-check-input checkboxes width-auto" name="informacion[]" value="Contenido" required>
                                         <label class="form-check-label" for="check1">Contenido</label>
@@ -109,7 +115,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="otra_info">Otra Informacion <small>(opcional)</small></label>
+                                <label for="otra_info">Otra Informaci&oacuten <small>(opcional)</small></label>
                                 <input class="" id="otra_info" name="otra_info" type="text">
                             </div>
 
@@ -133,7 +139,7 @@
                             <input type="hidden" name="publicacion" id="publicacion" value="<?= $id_publicacion ?>">
                             <div class="col-12">
                                 <div class="form-group button">
-                                    <button type="submit" class="btn ">Solicitar Informacion</button>
+                                    <button type="submit" class="btn ">Solicitar Informaci&oacuten </button>
                                 </div>
                             </div>
                         </div>
