@@ -111,7 +111,7 @@ class Informacion extends BaseController
                     'id_publicacion' => $this->nuloSiVacio($id_publicacion),
                     'area_interes' => $this->nuloSiVacio($area_interes),
                     'fecha_registro_area_interes' => date("Y-m-d H:i:s"),
-                    'tipo_informacion_solicitada' => implode(", ", $this->request->getPost('informacion')),
+                    'tipo_informacion_solicitada' => implode(",", $this->request->getPost('informacion')),
                     'otra_informacion' => $this->nuloSiVacio($this->request->getPost('otra_info')),
                     'estado_area_interes' => "PENDIENTE",
                 ];

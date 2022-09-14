@@ -5,7 +5,7 @@ return [
     'eventos' => 'Nuestros Eventos',
     'blog' => 'Blog',
     'contacto' => 'Contacto',
-    'informacion'=>'Informacion',
+    'informacion'=>'Información',
     'iniciarSesion' => 'Iniciar Sesión',
     'siguenosEn' => 'Síguenos en :  ',
     'buscar' => 'Buscar Contenido',

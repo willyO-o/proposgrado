@@ -13,10 +13,8 @@ class Oferta extends BaseController
 		$this->data['programa'] = $this->consultas->listarPublicacion('programasDivididos', ['estado_publicacion' => 'PUBLICADO', 'fecha_fin_publicacion >= ' => date('Y-m-d')], 'nombre_programa');
 		$this->data['areas'] = $this->consultas->seleccionarTabla('area', '*')->getResult();
 		$this->data['ciudades'] = $this->consultas->seleccionarTabla('ciudad', '*')->getResult();
-		
 		// var_dump($this->db->getLastQuery());
 		// return var_dump($this->data['areas']);
-		// dd($this->data['programa']);
 		return $this->templater->view('oferta/index', $this->data);
 	}
 

@@ -22,7 +22,7 @@
                 <div class="nav-inner">
                     <nav class="navbar navbar-expand-lg">
                         <a class="navbar-brand" href="<?= base_url('inicio') ?>">
-                            <img src="<?= base_url('edugrids/assets/images/logo/logo_blanco_posgrado.svg'); ?>" alt="POSGRADO UPEA">
+                            <img src="<?= base_url('edugrids/assets/images/logo/logo.png'); ?>" alt="POSGRADO UPEA">
                         </a>
                         <button class="navbar-toggler mobile-menu-btn" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="toggler-icon"></span>

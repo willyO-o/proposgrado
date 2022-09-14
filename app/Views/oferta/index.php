@@ -129,7 +129,7 @@
 								<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 									<div class="form-group-1">
 										<label for="nombre_persona">Nombre Completo <span class="text-danger">*</span></label>
-										<input class="form-control" id="nombre_persona" name="nombre_persona" type="text" required>
+										<input class="form-control" id="nombre_persona" name="nombre_persona" type="text" required oninput="javascript:this.value=this.value.toUpperCase();">
 									</div>
 								</div>
 								<div class="col-12 col-sm-12 col-md-6 col-lg-6">
@@ -287,7 +287,7 @@
 				<div id="modal-footer" class="modal-footer">
 					<div class="button d-flex align-items-center">
 						<button id="btn-enviar-informacion-programa" class="btn btn-info" type="submit" class="btn btn-primary"><i class="lni lni-arrow-right-circle" id="icono-enviar-formulario"></i> Solicitar Información<small id="porcentaje-enviar-formulario"></small></button>
-						<!-- <button type="button" class="btn btn-secondary enviar-whatsapp" style="margin-left: 2px;">Contacto Coordinador</button> -->
+						<button type="button" class="btn btn-secondary enviar-whatsapp" style="margin-left: 2px;">Contacto Coordinador</button>
 					</div>
 				</div>
 			</form>

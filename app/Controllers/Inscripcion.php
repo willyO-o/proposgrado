@@ -50,7 +50,9 @@ class Inscripcion extends BaseController
 	public function inscribir()
 	{
 
-		header("Access-Control-Allow-Origin: https://devposgrado1.upea.bo");
+		// header("Access-Control-Allow-Origin: https://sistemaposgrado.upea.bo");
+		header('Access-Control-Allow-Origin: *');
+
 		// var_dump($_REQUEST);
 		// return var_dump($_FILES);
 		$carnet = str_replace(' ', '', $this->request->getPost('ci'));
