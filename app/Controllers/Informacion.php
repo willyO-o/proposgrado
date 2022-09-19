@@ -29,7 +29,7 @@ class Informacion extends BaseController
             $id_publicacion = null;
         } else {
             $datos_programa = $consulta->getRowArray();
-            $programa = $datos_programa["grado_academico"]. " EN " .$datos_programa["nombre_programa"] .  " " . ($datos_programa["numero_version"] ? "VERSION " . $datos_programa["numero_version"] : "");
+            $programa = $datos_programa["grado_academico"] . " EN " . $datos_programa["nombre_programa"] .  " " . ($datos_programa["numero_version"] ? "VERSION " . $datos_programa["numero_version"] : "");
         }
         $this->data['informacion'] = '';
         $this->data['programa'] = $programa;
@@ -38,16 +38,18 @@ class Informacion extends BaseController
         $this->data['areas'] = $this->informacionModel->listar_areas()->getResultArray();
 
         // dd($this->data['areas']);
+        $this->eliminar_captchas();
+
         return $this->templater->view('informacion/index', $this->data);
     }
 
     public function informacion_generar_captcha()
     {
-        if(!is_dir('imagenes/captchas/')){
+        header('Access-Control-Allow-Origin: *');
+        if (!is_dir('imagenes/captchas/')) {
             mkdir('imagenes/captchas/', 0777, true);
         }
         // return;
-        // $this->eliminar_captchas();
         $respuesta = $this->captcha->generar_captcha("imagenes/captchas/");
         $respuesta["ruta"] = base_url() . "/" . $respuesta["ruta"];
         return $this->response->setJSON([
@@ -58,6 +60,7 @@ class Informacion extends BaseController
 
     public function informacion_registrar_solicitud()
     {
+        header('Access-Control-Allow-Origin: *');
         helper(['form']);
         $validation =  \Config\Services::validation();
 
@@ -70,7 +73,7 @@ class Informacion extends BaseController
         $id_publicacion = $this->request->getPost('publicacion');
 
         $validation->setRule("nombre_persona", 'Nompre Completo', 'required');
-        $validation->setRule("celular", 'Numero de Celular', 'required|numeric|min_length[8]|max_length[10]');
+        $validation->setRule("celular", 'Numero de Celular', 'required|numeric|min_length[8]|max_length[10]|greater_than_equal_to[60000000]|less_than_equal_to[79999999]');
         $validation->setRule("ciudad", 'Ciudad', 'required');
         $validation->setRule("informacion", 'Recibir Informacion', 'required');
         $validation->setRule("captcha", 'Captcha', 'required');
@@ -121,14 +124,14 @@ class Informacion extends BaseController
 
                 if ($id_persona_contacto > 0) {
 
-     
+
                     return $this->response->setJSON([
                         'exito' => true,
                         'mensaje' => "Solicitud enviada correctamente, Nuestro equipo se contactara con usted a la brevedad para brindarle la informacion solicitada.",
                         'captcha' => true,
                         'programa' => $id_publicacion != null ? $this->consultas->listarPublicacion('programa', ['id_publicacion' => $id_publicacion])->getRowArray() : null,
-                        'solicitud'=>$datos_solicitud,
-                        'area_interes'=> $this->request->getPost('area_interes')!=null ? $this->consultas->seleccionarTabla("area","*",["id_area"=>$this->request->getPost('area_interes')])->getRowArray() : null,
+                        'solicitud' => $datos_solicitud,
+                        'area_interes' => $this->request->getPost('area_interes') != null ? $this->consultas->seleccionarTabla("area", "*", ["id_area" => $this->request->getPost('area_interes')])->getRowArray() : null,
                     ]);
                 } else {
                     return $this->response->setJSON([
@@ -156,11 +159,19 @@ class Informacion extends BaseController
 
     private function eliminar_captchas()
     {
-        $files = glob('imagenes/captchas/*.png'); //obtenemos todos los nombres de los ficheros
-        foreach ($files as $file) {
-            if (is_file($file))
-                unlink($file); //elimino el fichero
+
+
+        $carpeta = "imagenes/captchas/";
+        $dir = opendir($carpeta);
+        while ($f = readdir($dir)) {
+
+            if ((time() - filemtime($carpeta . $f) > 3600 * 24 * 7) and !(is_dir($carpeta. $f))){
+                
+                unlink($carpeta . $f);
+            }
+                // unlink('tmp/' . $f);
         }
+        closedir($dir);
     }
 
     public function nuloSiVacio($dato)
