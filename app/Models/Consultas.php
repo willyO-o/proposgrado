@@ -44,7 +44,7 @@ class Consultas extends Database
         $requisito_programa = $this->db->table('pagina_web.psg_publicacion_descripcion pd')->select('requisitos_inscripcion')
             ->join('pagina_web.psg_descripcion_programa dp', 'dp.id_descripcion_programa = pd.id_descripcion_programa')
             ->getCompiledSelect();
-        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url')
+        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url')->where('id_tipo_respaldo is null')
             ->getCompiledSelect();
         $infograma_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as infograma')->where(['id_tipo_respaldo' => 1])
             ->getCompiledSelect();
@@ -57,7 +57,7 @@ class Consultas extends Database
             case 'programasDivididos':
                 $datos = [];
                 foreach ($this->distintoTabla('pagina_web.psg_publicacion', 'grado_academico') as $key => $value) {
-                    $builder = $this->db->table('pagina_web.psg_publicacion p')->select("p.*,g.*,per.nombre,per.paterno,per.materno, ($afiche_programa  where id_publicacion = p.id_publicacion limit 1), ($infograma_programa and id_publicacion = p.id_publicacion limit 1),  ($descripcion_programa where id_publicacion = p.id_publicacion limit 1)")
+                    $builder = $this->db->table('pagina_web.psg_publicacion p')->select("p.*,g.*,per.nombre,per.paterno,per.materno, ($afiche_programa  and id_publicacion = p.id_publicacion limit 1), ($infograma_programa and id_publicacion = p.id_publicacion limit 1),  ($descripcion_programa where id_publicacion = p.id_publicacion limit 1)")
                         ->join('gestion g', 'g.id_gestion =  p.id_gestion', 'left')
                         ->join('persona per', 'p.id_responsable_interno =  per.id_persona', 'left')
                         ->where(['grado_academico' => $value]);
@@ -78,7 +78,7 @@ class Consultas extends Database
                 break;
             case 'programa':
                 $builder = $this->db->table('pagina_web.psg_publicacion p')
-                    ->select("*, ($afiche_programa where id_publicacion = p.id_publicacion limit 1), 
+                    ->select("*, ($afiche_programa AND id_publicacion = p.id_publicacion limit 1), 
                     ($infograma_programa and id_publicacion = p.id_publicacion limit 1), 
                 ($descripcion_programa where id_publicacion = p.id_publicacion limit 1),
                 ($descripcion where id_publicacion = p.id_publicacion limit 1),

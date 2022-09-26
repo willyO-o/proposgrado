@@ -164,6 +164,7 @@ application/vendor/*
 /public_html/UUjHSz1y6zu0mvczJhgntEcsh3SQ/pago_programa
 /public_html/UUjHSz1y6zu0mvczJhgntEcsh3SQ/respaldo_programa
 /public_html/img/foto_persona
+/public/descargas_programa
 
 # for Visual Studio Code
 .vscode/*
