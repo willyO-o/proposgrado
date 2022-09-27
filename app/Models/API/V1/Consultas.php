@@ -44,7 +44,7 @@ class Consultas extends Database
         $requisito_programa = $this->db->table('pagina_web.psg_publicacion_descripcion pd')->select('requisitos_inscripcion')
             ->join('pagina_web.psg_descripcion_programa dp', 'dp.id_descripcion_programa = pd.id_descripcion_programa')
             ->getCompiledSelect();
-        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as imagen')
+        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as imagen')->where("id_tipo_respaldo IS NULL")
             ->getCompiledSelect();
         $infograma_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as infograma')->where(['id_tipo_respaldo' => 1])
             ->getCompiledSelect();
@@ -76,7 +76,7 @@ class Consultas extends Database
                         monto_matricula, numero_cuotas, precio_programa as monto_colegiatura, descuento_pago_contado,  fecha_fin_inscripcion, titulacion_intermedia, carga_horaria, duracion,
                         descuento_porcentaje_contado, descuento_porcentaje_grupal, descuento_porcentaje_en_fecha, area_especialidad, mostrar_coordinador, gestion,
                         per.nombre as nombre_coordinador, per.paterno as paterno_coordinador,per.materno as materno_coordinador, p.celular_coordinador,
-                        ($afiche_programa where id_publicacion = p.id_publicacion limit 1), 
+                        ($afiche_programa AND id_publicacion = p.id_publicacion limit 1), 
                         ($infograma_programa and id_publicacion = p.id_publicacion limit 1), 
                         ($descripcion_programa where id_publicacion = p.id_publicacion limit 1),
                         ($descripcion where id_publicacion = p.id_publicacion limit 1),
@@ -107,7 +107,7 @@ class Consultas extends Database
     {
 
 
-        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as imagen')
+        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as imagen')->where("id_tipo_respaldo IS NULL")
             ->getCompiledSelect();
         $infograma_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as infograma')->where(['id_tipo_respaldo' => 1])
             ->getCompiledSelect();
@@ -129,7 +129,7 @@ class Consultas extends Database
         $campos = "p.id_publicacion as id,grado_academico ,p.nombre_programa,numero_version,fecha_fin_inscripcion,carga_horaria,duracion,modalidad,area_especialidad,numero_cuotas,
                      monto_matricula, precio_programa as monto_colegiatura, p.sede,g.gestion,per.nombre as nombre_coordinador ,per.paterno as paterno_coordinador,numero_cuotas,
                 per.materno materno_coordinador,p.celular_coordinador ,  mostrar_coordinador,
-                ($afiche_programa  where id_publicacion = p.id_publicacion limit 1),
+                ($afiche_programa  AND id_publicacion = p.id_publicacion limit 1),
                 ($infograma_programa and id_publicacion = p.id_publicacion limit 1)";
 
         $builder = $this->db->table('pagina_web.psg_publicacion p')->select($campos)
@@ -195,7 +195,7 @@ class Consultas extends Database
     {
 
 
-        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as imagen')
+        $afiche_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as imagen')->where("id_tipo_respaldo IS NULL")
             ->getCompiledSelect();
         $infograma_programa = $this->db->table('pagina_web.psg_respaldo_multimedia')->select('url as infograma')->where(['id_tipo_respaldo' => 1])
             ->getCompiledSelect();
@@ -215,7 +215,7 @@ class Consultas extends Database
 
 
         $builder = $this->db->table('pagina_web.psg_publicacion p')
-            ->select("*, ($afiche_programa where id_publicacion = p.id_publicacion limit 1), 
+            ->select("*, ($afiche_programa AND id_publicacion = p.id_publicacion limit 1), 
                     ($infograma_programa and id_publicacion = p.id_publicacion limit 1), 
                 ($descripcion_programa where id_publicacion = p.id_publicacion limit 1),
                 ($descripcion where id_publicacion = p.id_publicacion limit 1),
