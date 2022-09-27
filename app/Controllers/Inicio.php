@@ -111,4 +111,16 @@ class Inicio extends BaseController
 		$this->data['testimonios'] = '';
 		return $this->templater->view('inicio/testimonio', $this->data);
 	}
+
+	public function fipaz()
+	{
+		$this->data['fipaz'] = '';
+		return $this->templater->view('inicio/fipaz', $this->data);
+	}
+
+	public function fexpocruz()
+	{
+		$this->data['fexpocruz'] = '';
+		return $this->templater->view('inicio/fexpocruz', $this->data);
+	}
 }

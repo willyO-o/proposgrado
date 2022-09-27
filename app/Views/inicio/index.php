@@ -135,52 +135,59 @@
 	</div>
 </section>
 
+
+
+
+
 <section class="about-us section">
 	<div class="container">
 		<div class="row">
+
 			<div class="col-lg-6 col-12">
 				<div class="about-left">
 					<div class="about-title align-left">
 						<span class="wow fadeInDown" data-wow-delay=".2s">Eventos 2022</span>
-						<h2 class="wow fadeInUp" data-wow-delay=".4s">Estamos presentes en la Fexpo Sucre Internacional 2022</h2>
-						<p class="wow fadeInUp" data-wow-delay=".6s">De 6 al 15 de mayo, expondremos nuestra
-							oferta académica, nuestros resultados obtenidos, Nuestra planificación para la gestión 2022 y mucho más.</p>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Estaremos presentes en la FIPAZ 2022</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">Del 12 al 23 de Octubre, expondremos nuestra
+							oferta académica, nuestros resultados obtenidos, Nuestra planificación para la gestión 2023 y mucho más.</p>
 						<p class="qote wow fadeInUp" data-wow-delay=".8s">Visita nuestro stand, y recibe diversos beneficios, entre
 							los cuales incluiremos: becas, descuentos, regalos y promociones especiales.</p>
 						<div class="button wow fadeInUp" data-wow-delay="1s">
 							<a href="#" class="btn">Seguir Leyendo</a>
-							<a href="https://youtu.be/PgQbrhSQVE0" class="glightbox video btn"> Reproducir Video<i class="lni lni-play"></i></a>
+							<a href="https://www.youtube.com/watch?v=CoJw1dLFFLA" class="glightbox video btn"> Reproducir Video<i class="lni lni-play"></i></a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-6 col-12">
 				<div class="about-right wow fadeInRight" data-wow-delay=".4s">
-					<img src="<?= base_url('edugrids/assets/images/about/fexpo-sucre.jpeg'); ?>" alt="#">
+					<img src="<?= base_url('edugrids/assets/images/about/fipaz.jpg'); ?>" alt="#">
 				</div>
 			</div>
 		</div>
+
+
 		<hr>
 		<div class="row">
 			<div class="col-lg-6 col-12">
 				<div class="about-left">
 					<div class="about-title align-left">
-						<span class="wow fadeInDown" data-wow-delay=".2s">Eventos 2021</span>
-						<h2 class="wow fadeInUp" data-wow-delay=".4s">Estamos presentes en la FeicoBol 2021</h2>
-						<p class="wow fadeInUp" data-wow-delay=".6s">Del 28 de octubre al 07 de noviembre, expondremos nuestra
-							oferta académica, nuestros resultados obtenidos, nuestra planificación para la gestión 2022 y mucho más.</p>
+						<span class="wow fadeInDown" data-wow-delay=".2s">Eventos 2022</span>
+						<h2 class="wow fadeInUp" data-wow-delay=".4s">Estaremos presentes en la Fexpo Cruz 2022</h2>
+						<p class="wow fadeInUp" data-wow-delay=".6s">Del 16 al 25 de septiembre, expondremos nuestra
+							oferta académica, nuestros resultados obtenidos, Nuestra planificación para la gestión 2023 y mucho más.</p>
 						<p class="qote wow fadeInUp" data-wow-delay=".8s">Visita nuestro stand, y recibe diversos beneficios, entre
 							los cuales incluiremos: becas, descuentos, regalos y promociones especiales.</p>
 						<div class="button wow fadeInUp" data-wow-delay="1s">
-							<a href="/inicio/feicobol" class="btn">Seguir Leyendo</a>
-							<a href="https://youtu.be/A_QN1g3xgnM" class="glightbox video btn"> Reproducir Video<i class="lni lni-play"></i></a>
+							<a href="#" class="btn">Seguir Leyendo</a>
+							<a href="https://www.youtube.com/watch?v=gjtMJRu9Nso" class="glightbox video btn"> Reproducir Video<i class="lni lni-play"></i></a>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="col-lg-6 col-12">
 				<div class="about-right wow fadeInRight" data-wow-delay=".4s">
-					<img src="<?= base_url('edugrids/assets/images/about/about-img2.png'); ?>" alt="#">
+					<img src="<?= base_url('edugrids/assets/images/about/expocruz_2022.jpg'); ?>" alt="#">
 				</div>
 			</div>
 		</div>

@@ -110,7 +110,7 @@
 
         if ($('.glightbox').length) {
             GLightbox({
-                'href': 'https://youtu.be/PgQbrhSQVE0',
+                'href': 'https://www.youtube.com/watch?v=gjtMJRu9Nso',
                 'type': 'video',
                 'source': 'youtube', //vimeo, youtube or local
                 'width': 900,

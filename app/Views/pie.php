@@ -24,40 +24,54 @@
                     <div class="single-footer sm-custom-border recent-blog">
                         <h3><?= lang('global.ultimasNoticias') ?></h3>
                         <ul>
+                            
                             <li>
-                                <a href="/inicio/fexpo_sucre">
-                                    <img src="<?= base_url('edugrids/assets/images/blog/fexpo-sucre.jpeg'); ?>" alt="#">
-                                    Estamos presente en la Fexpo Sucre Internacional 2022
+                                <a href="/inicio/fipaz">
+                                    <img src="<?= base_url('edugrids/assets/images/blog/fipaz.jpg'); ?>" alt="#">
+                                    Estamos presentes en la FIPAZ 2022
                                 </a>
-                                <span class="date"><i class="lni lni-calendar"></i>06 May., 2022</span>
+                                <span class="date"><i class="lni lni-calendar"></i>12 Oct., 2022</span>
                             </li>
                             <li>
-                                <a href="/inicio/feicobol">
-                                    <img src="<?= base_url('edugrids/assets/images/blog/footer-news3.jpg'); ?>" alt="#">
-                                    Estamos presentes en la FEICOBOL 2021
+                                <a href="/inicio/fexpocruz">
+                                    <img src="<?= base_url('edugrids/assets/images/blog/expocruz_2022.jpg'); ?>" alt="#">
+                                    Estamos presente en la Fexpo Cruz Internacional 2022
                                 </a>
-                                <span class="date"><i class="lni lni-calendar"></i>01 Nov., 2021</span>
+                                <span class="date"><i class="lni lni-calendar"></i>17 Sep., 2022</span>
                             </li>
-                            <li>
-                                <a href="javascript:alert('Aún no disponible')">
-                                    <img src="<?= base_url('edugrids/assets/images/blog/footer-news2.jpg'); ?>" alt="#">
-                                    Graduación Posgradual IV/2021
-                                </a>
-                                <span class="date"><i class="lni lni-calendar"></i>29 Oct., 2021</span>
-                            </li>
+
                         </ul>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
                     <div class="single-footer sm-custom-border f-link">
-                        <h3><?= lang('global.listaCursos') ?></h3>
-                        <ul>
-                            <li><a href="javascript:void(0)">Diplomados</a></li>
-                            <li><a href="javascript:void(0)">Especialidades</a></li>
-                            <li><a href="javascript:void(0)">Maestr&iacute;as</a></li>
-                            <li><a href="javascript:void(0)">Doctorados</a></li>
-                            <li><a href="javascript:void(0)">Postdoctorados</a></li>
-                        </ul>
+
+                        <div class="single-footer sm-custom-border recent-blog">
+                            <h3><?= lang('global.ultimasNoticias') ?></h3>
+                            <ul>
+                                <li>
+                                    <a href="/inicio/fexpo_sucre">
+                                        <img src="<?= base_url('edugrids/assets/images/blog/fexpo-sucre.jpeg'); ?>" alt="#">
+                                        Estamos presente en la Fexpo Sucre Internacional 2022
+                                    </a>
+                                    <span class="date"><i class="lni lni-calendar"></i>06 May., 2022</span>
+                                </li>
+                                <li>
+                                    <a href="/inicio/feicobol">
+                                        <img src="<?= base_url('edugrids/assets/images/blog/footer-news3.jpg'); ?>" alt="#">
+                                        Estamos presentes en la FEICOBOL 2021
+                                    </a>
+                                    <span class="date"><i class="lni lni-calendar"></i>01 Nov., 2021</span>
+                                </li>
+                                <li>
+                                    <a href="javascript:alert('Aún no disponible')">
+                                        <img src="<?= base_url('edugrids/assets/images/blog/footer-news2.jpg'); ?>" alt="#">
+                                        Graduación Posgradual IV/2021
+                                    </a>
+                                    <span class="date"><i class="lni lni-calendar"></i>29 Oct., 2021</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-6 col-12">
