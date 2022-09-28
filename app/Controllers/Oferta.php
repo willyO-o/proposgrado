@@ -13,6 +13,7 @@ class Oferta extends BaseController
 		$this->data['programa'] = $this->consultas->listarPublicacion('programasDivididos', ['estado_publicacion' => 'PUBLICADO', 'fecha_fin_publicacion >= ' => date('Y-m-d')], 'nombre_programa');
 		$this->data['areas'] = $this->consultas->seleccionarTabla('area', '*')->getResult();
 		$this->data['ciudades'] = $this->consultas->seleccionarTabla('ciudad', '*')->getResult();
+		$this->data["modalidades"]= $this->consultas->seleccionarTabla('tipo_programa', '*',['estado_tipo_programa' => 'REGISTRADO'])->getResult(); 
 		// var_dump($this->db->getLastQuery());
 		// return var_dump($this->data['areas']);
 		return $this->templater->view('oferta/index', $this->data);
@@ -88,5 +89,16 @@ class Oferta extends BaseController
 			$coolor .= $this->generarLetra();
 		}
 		return  "#" . $coolor;
+	}
+
+
+	public function programasAjax()
+	{
+		if($this->request->isAJAX()){
+			$this->data['programas'] = $this->consultas->listarPublicacion('programasFiltro', ['estado_publicacion' => 'PUBLICADO', 'fecha_fin_publicacion >= ' => date('Y-m-d')], 'nombre_programa');
+
+			return $this->response->setJSON($this->data);
+
+		}
 	}
 }

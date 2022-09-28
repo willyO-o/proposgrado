@@ -57,7 +57,11 @@ class Consultas extends Database
             case 'programasDivididos':
                 $datos = [];
                 foreach ($this->distintoTabla('pagina_web.psg_publicacion', 'grado_academico') as $key => $value) {
-                    $builder = $this->db->table('pagina_web.psg_publicacion p')->select("p.*,g.*,per.nombre,per.paterno,per.materno, ($afiche_programa  and id_publicacion = p.id_publicacion limit 1), ($infograma_programa and id_publicacion = p.id_publicacion limit 1),  ($descripcion_programa where id_publicacion = p.id_publicacion limit 1)")
+                    $builder = $this->db->table('pagina_web.psg_publicacion p')
+                    ->select("p.*,g.*,per.nombre,per.paterno,per.materno, 
+                     ($afiche_programa  and id_publicacion = p.id_publicacion limit 1), 
+                     ($infograma_programa and id_publicacion = p.id_publicacion limit 1), 
+                      ($descripcion_programa where id_publicacion = p.id_publicacion limit 1)")
                         ->join('gestion g', 'g.id_gestion =  p.id_gestion', 'left')
                         ->join('persona per', 'p.id_responsable_interno =  per.id_persona', 'left')
                         ->where(['grado_academico' => $value]);
@@ -92,6 +96,26 @@ class Consultas extends Database
                     empty($condicion) ? $builder->get() : $builder->getWhere($condicion);
                 // $query = $this->db->getLastQuery();
                 // echo (string)$query;
+                break;
+            case 'programasFiltro':
+                $datos = [];
+                    $campos = "p.id_publicacion,p.nombre_programa,p.sede,grado_academico,
+                    COALESCE(modalidad, '') as modalidad, COALESCE(area_especialidad, '') as area_especialidad,
+                    concat(p.grado_academico,' EN ',p.nombre_programa,' VERSION ', p.numero_version) as nombre_programa_completo ";
+
+                    $builder = $this->db->table('pagina_web.psg_publicacion p')->select($campos)
+                        ->join('gestion g', 'g.id_gestion =  p.id_gestion', 'left')
+                        ->join('persona per', 'p.id_responsable_interno =  per.id_persona', 'left');
+
+                        empty(IDSEDE) ? :  $builder->where(array('sede' => SEDE));
+
+                        
+
+                    empty($orden) ?: $builder->orderBy($orden);
+                    $datos = empty($condicion) ? $builder->get()->getResultArray() : $builder->getWhere($condicion)->getResultArray();
+
+                return $datos;
+
                 break;
             default:
                 # code...

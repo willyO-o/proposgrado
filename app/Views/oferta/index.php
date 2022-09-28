@@ -1,105 +1,158 @@
-<section class="courses section grid-page section">
+<section class="courses section grid-page section pt-2">
 	<div class="container">
-		<?php //echo '<pre>'; var_dump($programa); exit(); 
-		?>
-		<!--		<div class="col-sm-12 col-lg-12 button p-1 d-flex justify-content-end">
-			<a class=" btn sucripcion_area p-3"><i class="lni lni-pencil-alt"></i> Suscribirse</a>
-		</div>-->
-		<?php foreach (['TECNICO MEDIO' => 'TECNICO MEDIO', 'TECNICO SUPERIOR' => 'TECNICO SUPERIOR', 'LICENCIATURA' => 'LICENCIATURAS', 'DIPLOMADO' => 'DIPLOMADOS', 'ESPECIALIDAD' => 'ESPECIALIDADES', 'MAESTRÍA' => 'MAESTRÍAS', 'DOCTORADO' => 'DOCTORADOS', 'POST DOCTORADO' => 'POST DOCTORADOS'] as $key => $value) : ?>
-			<?php if (isset($programa[$key])) : ?>
-				<div class="row wow fadeInUp pb-5" data-wow-delay=".2s">
-					<h3 class="title"><?= $value . ' SEDE ' . (IDSEDE == 1 ? 'CENTRAL' : SEDE) ?></h3>
-					<?php if (!empty($programa[$key])) : ?>
-						<?php foreach ($programa[$key] as $k => $v) : ?>
-							<div class="col-lg-4 col-md-6 col-12 text-center">
-								<div class="single-course wow fadeInUp" data-wow-delay=".2s">
-									<div class="course-image caja-imagen">
-										<a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>">
-											<img src="<?= base_url('imagenes/afiches/' . ($v['url'] == null ? 'programa.jpg' : $v['url'])) ?>" alt="#"></a>
-
-										<p class="price">Bs <?= number_format($v['precio_programa'], '0', ',', '.'); ?></p>
-									</div>
-									<div class="content pb-0">
-										<div class="mb-2">
-											<h5 class="mb-0 titulo-programa" style="min-height: 70px;"><a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>"><?= $key . ' EN ' . $v['nombre_programa'] ?><br /><small><?= ' Versión: ' . numero_romano($v['numero_version']) ?></small></a></h5>
-
-											<?php if ($v["mostrar_coordinador"] == "NO") : ?>
-												<p> POSGRADO - SEDE CENTRAL </p>
 
 
-											<?php else : ?>
-												<?php if ($v["id_responsable_interno"]) : ?>
-													<p>Coordinador: <?= $v["nombre"] . " " . $v["paterno"] . " " . $v["materno"] ?></p>
-												<?php endif ?>
-											<?php endif ?>
+		<div class="row mt-5 d-flex justify-content-center">
 
 
+			<div class="col-md-12 col-lg-8">
+				<div class="input-group">
+
+					<input type="search" name="" id="buscar-programa" placeholder="Buscar programa" class="form-control">
+					<div class="button">
+						<label class="input-group-text btn" for="buscar-programa"><i class="lni lni-search"></i> </label>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="row justify-content-center pt-3" id="caja-filtros" style="display:none">
+			<div class="col-md-6 col-lg-4">
+				<div class="input-group mb-3">
+					<div class="button">
+						<label class="input-group-text btn" for="filtro-modalidad">Modalidad</label>
+					</div>
+					<select class="form-control" id="filtro-modalidad">
+						<option selected value="0">TODOS</option>
+						<?php foreach ($modalidades as $modalidad) : ?>
+							<option value="<?= $modalidad->nombre_tipo_programa ?>"><?= $modalidad->nombre_tipo_programa ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+			</div>
+
+			<div class="col-md-6 col-lg-4">
+				<div class="input-group mb-3">
+					<div class="button">
+						<label class="input-group-text btn" for="filtro-area">Area</label>
+
+					</div>
+					<select class="form-control" id="filtro-area">
+						<option selected value="0">Todos</option>
+						<?php foreach ($areas as $area) : ?>
+							<option value="<?= $area->id_area ?>"><?= $area->nombre_area ?></option>
+						<?php endforeach; ?>
+					</select>
+				</div>
+			</div>
+		</div>
+		<p class="text-center"><a href="javascript:void(0)" class="my-3 font-weight-bold text-primary  text-center" id="mostrar-filtros"><b>Mostrar filtros</b> <i class="lni lni-chevron-down"></i> </a></p>
+
+
+		<div id="no-encontrado" class=" py-5" style="display: none;">
+			<h3>NO SE ENCONTRARON RESULTADOS QUE COINCIDAN CON LA BUSQUEDA </h3>
+		</div>
+		<div id="contenedor-programas">
+			<?php foreach (['TECNICO MEDIO' => 'TECNICO MEDIO', 'TECNICO SUPERIOR' => 'TECNICO SUPERIOR', 'LICENCIATURA' => 'LICENCIATURAS', 'DIPLOMADO' => 'DIPLOMADOS', 'ESPECIALIDAD' => 'ESPECIALIDADES', 'MAESTRÍA' => 'MAESTRÍAS', 'DOCTORADO' => 'DOCTORADOS', 'POST DOCTORADO' => 'POST DOCTORADOS'] as $key => $value) : ?>
+
+				<?php $contador = 0 ?>
+				<?php if (isset($programa[$key])) : ?>
+					<div class="row wow fadeInUp pb-5 row-psg" data-wow-delay=".2s">
+						<h3 class="title"><?= $value . ' SEDE ' . (IDSEDE == 1 ? 'CENTRAL' : SEDE) ?></h3>
+						<?php if (!empty($programa[$key])) : ?>
+							<?php foreach ($programa[$key] as $k => $v) : ?>
+								<div class="col-lg-4 col-md-6 col-12 text-center cartas-psg " data-id="<?= $v["id_publicacion"] ?>">
+									<div class="single-course wow fadeInUp" data-wow-delay=".2s">
+										<div class="course-image caja-imagen">
+											<a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>">
+												<img src="<?= base_url('imagenes/afiches/' . ($v['url'] == null ? 'programa.jpg' : $v['url'])) ?>" alt="#"></a>
+
+											<p class="price">Bs <?= number_format($v['precio_programa'], '0', ',', '.'); ?></p>
 										</div>
-										<!-- <a href="service-single.html">
+										<div class="content pb-0">
+											<div class="mb-2">
+												<h5 class="mb-0 titulo-programa" style="min-height: 70px;"><a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>"><?= $key . ' EN ' . $v['nombre_programa'] ?><br /><small><?= ' Versión: ' . numero_romano($v['numero_version']) ?></small></a></h5>
+
+												<?php if ($v["mostrar_coordinador"] == "NO") : ?>
+													<p> POSGRADO - SEDE CENTRAL </p>
+
+
+												<?php else : ?>
+													<?php if ($v["id_responsable_interno"]) : ?>
+														<p>Coordinador: <?= $v["nombre"] . " " . $v["paterno"] . " " . $v["materno"] ?></p>
+													<?php endif ?>
+												<?php endif ?>
+
+
+											</div>
+											<!-- <a href="service-single.html">
 											<small class="h5 mb-0 truncate-text text-dark" title="<?= $v['nombre_programa'] ?>"><?= $v['nombre_programa'] ?></small>
 										</a> -->
-										<div class="button pb-3">
-											<a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>" class="btn p-2">
-												<i class="lni lni-book"></i> Contenido del programa
-											</a>
-											<?php if (!is_null($v['infograma'])) : ?>
-												<a title="Descargra Infograma del Programa (<?= $v['infograma'] ?>})" target="_blank" href="<?= base_url('descargas_programa/' . $v['infograma']) ?>" class="btn p-2">
-													<i class="lni lni-download"></i>
+											<div class="button pb-3">
+												<a href="<?= route_to('App\Controllers\Oferta::detalle', $v['id_publicacion']) ?>" class="btn p-2">
+													<i class="lni lni-book"></i> Contenido del programa
 												</a>
-											<?php endif; ?>
-										</div>
+												<?php if (!is_null($v['infograma'])) : ?>
+													<a title="Descargra Infograma del Programa (<?= $v['infograma'] ?>})" target="_blank" href="<?= base_url('descargas_programa/' . $v['infograma']) ?>" class="btn p-2">
+														<i class="lni lni-download"></i>
+													</a>
+												<?php endif; ?>
+											</div>
 
-										<ul class="course-features-1">
-											<li><i class=" lni lni-pencil-alt"></i> <span class="label">Inscripción hasta</span>
-												<span class="value"><?= $v['fecha_fin_inscripcion'] ?></span>
-											</li>
-											<li><i class="lni lni-timer"></i> <span class="label">Carga Horaria </span>
-												<span class="value"><?= $v['carga_horaria'] ?> horas</span>
-											</li>
-											<li><i class="lni lni-calendar"></i> <span class="label">Duración </span>
-												<span class="value"><?= $v['duracion'] ?> Meses</span>
-											</li>
-											<li><i class="lni lni-arrow-right-circle"></i> <span class="label">Modalidad </span>
-												<span class="value"><?= $v['modalidad'] ?></span>
-											</li>
-											<li><i class="lni lni-credit-cards"></i> <span class="label">Costo Colegiatura </span>
-												<span class="value"><?= $v['precio_programa'] ?></span>
-											</li>
-											<li><i class="lni lni-credit-cards"></i> <span class="label">Costo Matricula </span>
-												<span class="value"><?= $v['monto_matricula'] ?></span>
-											</li>
-											<li><i class="lni lni-investment"></i> <span class="label">Número de Cuotas</span>
-												<span class="value"><?= $v['numero_cuotas'] ?></i></span>
-											</li>
-										</ul>
-									</div>
-									<div class="bottom-content">
-										<div class="row">
-											<div class="col-sm-12 col-lg-6 button p-1">
-												<a class="btn informacion-programa p-3" href="javascript:void(0)" data-id-publicacion="<?= $v['id_publicacion'] ?>" data-detalle=" <?= $v['grado_academico'] . ' EN ' . $v['nombre_programa'] . (empty($v['modalidad']) ? '' : ' Mod. ' . $v['modalidad']) . (empty($v['numero_version']) ? '' : ' Versión ' . $v['numero_version']) ?>"><i class="lni lni-question-circle"></i> Información</a>
-											</div>
-											<div class="col-sm-12 col-lg-6 button p-1">
-												<?php if ($v['fecha_fin_inscripcion'] >= date('Y-m-d')) : ?>
-													<a class="btn p-3" href="<?= route_to('App\Controllers\Inscripcion::formulario', $v['id_publicacion']) ?>"><i class="lni lni-credit-cards"></i> Inscríbete</a>
-												<?php endif ?>
+											<ul class="course-features-1">
+												<li><i class=" lni lni-pencil-alt"></i> <span class="label">Inscripción hasta</span>
+													<span class="value"><?= $v['fecha_fin_inscripcion'] ?></span>
+												</li>
+												<li><i class="lni lni-timer"></i> <span class="label">Carga Horaria </span>
+													<span class="value"><?= $v['carga_horaria'] ?> horas</span>
+												</li>
+												<li><i class="lni lni-calendar"></i> <span class="label">Duración </span>
+													<span class="value"><?= $v['duracion'] ?> Meses</span>
+												</li>
+												<li><i class="lni lni-arrow-right-circle"></i> <span class="label">Modalidad </span>
+													<span class="value"><?= $v['modalidad'] ?></span>
+												</li>
+												<li><i class="lni lni-credit-cards"></i> <span class="label">Costo Colegiatura </span>
+													<span class="value"><?= $v['precio_programa'] ?></span>
+												</li>
+												<li><i class="lni lni-credit-cards"></i> <span class="label">Costo Matricula </span>
+													<span class="value"><?= $v['monto_matricula'] ?></span>
+												</li>
+												<li><i class="lni lni-investment"></i> <span class="label">Número de Cuotas</span>
+													<span class="value"><?= $v['numero_cuotas'] ?></i></span>
+												</li>
+											</ul>
+										</div>
+										<div class="bottom-content">
+											<div class="row">
+												<div class="col-sm-12 col-lg-6 button p-1">
+													<a class="btn informacion-programa p-3" href="javascript:void(0)" data-id-publicacion="<?= $v['id_publicacion'] ?>" data-detalle=" <?= $v['grado_academico'] . ' EN ' . $v['nombre_programa'] . (empty($v['modalidad']) ? '' : ' Mod. ' . $v['modalidad']) . (empty($v['numero_version']) ? '' : ' Versión ' . $v['numero_version']) ?>"><i class="lni lni-question-circle"></i> Información</a>
+												</div>
+												<div class="col-sm-12 col-lg-6 button p-1">
+													<?php if ($v['fecha_fin_inscripcion'] >= date('Y-m-d')) : ?>
+														<a class="btn p-3" href="<?= route_to('App\Controllers\Inscripcion::formulario', $v['id_publicacion']) ?>"><i class="lni lni-credit-cards"></i> Inscríbete</a>
+													<?php endif ?>
+												</div>
 											</div>
 										</div>
 									</div>
+
 								</div>
+							<?php endforeach ?>
+						<?php else : ?>
+							<div class="col-lg-12 col-md-12 col-12 text-center">
+								<div class="single-feature">
+									<h5><a href="javascript:void(0)">No hay <?= $value ?> vigentes </a></h5>
+									<p>No contamos con <?= $value ?> vigentes para la inscripción en Linea.</p>
+								</div>
+							</div>
+						<?php endif ?>
+					</div>
+				<?php endif ?>
+			<?php endforeach ?>
+		</div>
 
-							</div>
-						<?php endforeach ?>
-					<?php else : ?>
-						<div class="col-lg-12 col-md-12 col-12 text-center">
-							<div class="single-feature">
-								<h5><a href="javascript:void(0)">No hay <?= $value ?> vigentes </a></h5>
-								<p>No contamos con <?= $value ?> vigentes para la inscripción en Linea.</p>
-							</div>
-						</div>
-					<?php endif ?>
-				</div>
-			<?php endif ?>
-		<?php endforeach ?>
 	</div>
 </section>
 

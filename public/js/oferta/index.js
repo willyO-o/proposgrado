@@ -385,3 +385,133 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 });
+
+
+
+
+var datos = null;
+
+$.getJSON("/oferta/programasAjax", {},
+  function (data) {
+    // console.log(data);
+    datos = data.programas;
+    // console.log(datos);
+
+  }
+);
+
+
+$("#filtro-area").change(function () {
+  let area = $(this).val();
+
+  filtrar_datos($("#buscar-programa").val(), area, $("#filtro-modalidad").val());
+
+});
+
+$("#filtro-modalidad").change(function () {
+  let modalidad = $(this).val();
+  filtrar_datos($("#buscar-programa").val(), $("#filtro-area").val(), modalidad);
+});
+
+
+$("#buscar-programa").on("input", function () {
+
+  let buscar = $(this).val();
+  filtrar_datos(buscar, $("#filtro-area").val(), $("#filtro-modalidad").val());
+
+});
+
+
+function filtrar_datos(texto_buscar, area, modalidad = null) {
+
+  if (datos) {
+    $("#contenedor-programas").show()
+    $("#no-encontrado").hide();
+
+    $(".cartas-psg").hide();
+
+    texto_buscar = texto_buscar.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+    modalidad = modalidad.toLowerCase();
+
+
+
+
+    if (area != "0" && modalidad != "0") {
+      let filtrado = datos.filter((item) => {
+        return item.nombre_programa_completo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(texto_buscar) > -1;
+      }).filter((item) => {
+        return item.area_especialidad.indexOf(area) > -1;
+      }).filter((item) => {
+        return item.modalidad.toLowerCase().indexOf(modalidad) > -1;
+      }).forEach((item) => {
+        let carta = $(`.cartas-psg[data-id='${item.id_publicacion}']`)
+
+        carta.find(".wow").css({ "visibility": "visible", "animation-delay": "0.2s", "animation-name": "fadeInUp" });
+        carta.show();
+
+      });
+
+    } else if (area != "0" && modalidad == "0") {
+      let filtrado = datos.filter((item) => {
+        return item.nombre_programa_completo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(texto_buscar) > -1;
+      }).filter((item) => {
+        return item.area_especialidad.indexOf(area) > -1;
+      }).forEach((item) => {
+        let carta = $(`.cartas-psg[data-id='${item.id_publicacion}']`)
+
+        carta.find(".wow").css({ "visibility": "visible", "animation-delay": "0.2s", "animation-name": "fadeInUp" });
+        carta.show();
+
+      });
+    } else if (area == "0" && modalidad != "0") {
+
+      let filtrado = datos.filter((item) => {
+        return item.nombre_programa_completo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(texto_buscar) > -1;
+      }).filter((item) => {
+        return item.modalidad.toLowerCase().indexOf(modalidad) > -1;
+      }).forEach((item) => {
+        let carta = $(`.cartas-psg[data-id='${item.id_publicacion}']`)
+
+        carta.find(".wow").css({ "visibility": "visible", "animation-delay": "0.2s", "animation-name": "fadeInUp" });
+        carta.show();
+
+      });
+
+    } else {
+      let filtrado = datos.filter((item) => {
+        return item.nombre_programa_completo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").indexOf(texto_buscar) > -1;
+      }).forEach((item) => {
+        let carta = $(`.cartas-psg[data-id='${item.id_publicacion}']`)
+
+        carta.find(".wow").css({ "visibility": "visible", "animation-delay": "0.2s", "animation-name": "fadeInUp" });
+        carta.show();
+
+      });
+    }
+
+    if ($(".cartas-psg:visible").length == 0) {
+      $("#contenedor-programas").hide()
+      $("#no-encontrado").show();
+
+    }
+  }
+
+
+
+}
+
+
+$("#mostrar-filtros").click(function () {
+  $("#caja-filtros").slideToggle();
+
+
+  $("#filtro-area").val("0").trigger("change");
+  $("#filtro-modalidad").val("0").trigger("change");
+
+
+  $(this).find("i").toggleClass("lni lni-chevron-down lni lni-chevron-up");
+
+
+  $(this).find("b").text($(this).find("b").text() == "Mostrar filtros" ? "Ocultar filtros" : "Mostrar filtros");
+
+});
