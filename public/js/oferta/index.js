@@ -512,6 +512,6 @@ $("#mostrar-filtros").click(function () {
   $(this).find("i").toggleClass("lni lni-chevron-down lni lni-chevron-up");
 
 
-  $(this).find("b").text($(this).find("b").text() == "Mostrar filtros" ? "Ocultar filtros" : "Mostrar filtros");
+  // $(this).find("b").text($(this).find("b").text() == "Mostrar filtros" ? "Ocultar filtros" : "Mostrar filtros");
 
 });

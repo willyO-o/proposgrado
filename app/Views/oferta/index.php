@@ -47,7 +47,7 @@
 				</div>
 			</div>
 		</div>
-		<p class="text-center"><a href="javascript:void(0)" class="my-3 font-weight-bold text-primary  text-center" id="mostrar-filtros"><b>Mostrar filtros</b> <i class="lni lni-chevron-down"></i> </a></p>
+		<p class="text-center"><a href="javascript:void(0)" class="my-3 font-weight-bold text-primary  text-center" id="mostrar-filtros"><b>Busqueda Avanzada</b> <i class="lni lni-chevron-down"></i> </a></p>
 
 
 		<div id="no-encontrado" class=" py-5" style="display: none;">
