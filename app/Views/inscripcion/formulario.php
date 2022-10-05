@@ -33,6 +33,114 @@
 
                         <?php if ($mensaje['estado'] == 'esta_inscrito') : ?>
                         <?php elseif ($mensaje['estado'] == 'no_esta_inscrito') : ?>
+                            <div id="datos_academicos">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Formaci&oacute;n Acad&eacute;mica </h5>
+                                        <p class="text-danger font-weight-bold"> Los siguientes Campos son Requeridos para generar su formulario 01. <br><b> Ingrese los datos con Mayor Grado Academico con el que cuente Actualmente. </b>
+                                            <b> Verifique que la informacion sea Correcta o Actualice los datos Con su Grado Academico Mayor Actual</b>
+                                        </p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group-1">
+
+                                                <label for="institucion">Universidad/Institucion donde reliz&oacute; su formaci&oacute;n</label>
+                                                <!-- <input class="form-control text-uppercase" id="institucion" name="institucion" type="text" onkeyup="this.value = this.value.toUpperCase();" > -->
+                                                <input class="form-control" id="institucion" name="institucion" type="search" value="<?= $info_adicional["nombre_unidad_academica"] ?? "" ?>" required>
+                                                <input type="hidden" name="id_unidad_academica" id="id_unidad_academica" value="<?= $info_adicional["id_unidad_academica"] ?? "" ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="id_grado_academico">Titulo Obtenido</label>
+                                                <select id="id_grado_academico" name="id_grado_academico" class="form-select w-100">
+                                                    <option value="">Seleccione Titulo</option>
+                                                    <?php foreach ($grados_academicos as $grado) : ?>
+                                                        <option value="<?= $grado["id_grado_academico"] ?>" <?= ($info_adicional["id_grado_academico"] ?? "") == $grado["id_grado_academico"] ? "selected" : ""  ?>> <?= $grado["descripcion_grado_academico"] ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="nro_titulo_academico">Numero de Registro</label>
+                                                <input class="form-control" id="nro_titulo_academico" name="nro_titulo_academico" type="text" min="0" max="9999999999" maxlength="10" minlength="4" value="<?= $info_adicional["nro_titulo_academico"] ?? "" ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="anio_expedicion_titulo">Año expedicion Titulo</label>
+                                                <input class="form-control" id="anio_expedicion_titulo" name="anio_expedicion_titulo" type="text" min="1900" maxlength="4" minlength="4" max="<?= date("Y") ?>" value="<?= $info_adicional["anio_expedicion_titulo"] ?? "" ?>" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group-1">
+                                                <label for="profesion">Profesi&oacute;n</label>
+                                                <input class="form-control text-uppercase" id="profesion" name="profesion" type="text" value="<?= $info_adicional["profesion"] ?? "" ?>" onkeyup="this.value = this.value.toUpperCase();" maxlength="47" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group-1">
+                                                <label for="area_especializacion">Area de Especiaizaci&oacute;n</label>
+                                                <input class="form-control text-uppercase" id="area_especializacion" name="area_especializacion" value="<?= $info_adicional["area_especializacion"] ?? "" ?>" type="text" onkeyup="this.value = this.value.toUpperCase();" maxlength="47" required>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Informaci&oacute;n Adicional (Opcional) </h5>
+                                        <p class="text-danger">Los siguientes Campos son Opcionales</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group-1">
+
+                                                <label for="nombre_institucion">Instituci&oacute;n &Uacute; Organizaci&oacute;n a la que pertenece</label>
+                                                <input class="form-control" id="nombre_institucion" name="nombre_institucion" type="text" value="<?= $info_adicional["nombre_institucion"] ?? "" ?>" onkeyup="this.value = this.value.toUpperCase();" maxlength="60">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="cargo_trabajo">Cargo Actual</label>
+                                                <input class="form-control" id="cargo_trabajo" name="cargo_trabajo" type="text" value="<?= $info_adicional["cargo_trabajo"] ?? "" ?>" onkeyup="this.value = this.value.toUpperCase();" maxlength="27">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="vigencia_trabajo">Vigencia</label>
+                                                <input class="form-control" id="vigencia_trabajo" name="vigencia_trabajo" type="date" max="<?= date("Y") ?>" value="<?= $info_adicional["vigencia_trabajo"] ?? "" ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="id_municipio">Lugar donde ocupa el cargo</label>
+                                                <select name="id_municipio" class="form-select" id="id_municipio" style="width: 100%;">
+                                                    <option value="">Seleccione</option>
+
+                                                    <?php foreach ($locaciones as $locacion) : ?>
+
+                                                        <option value="<?= $locacion["id_locacion"] ?>" <?= ($info_adicional["id_locacion"] ?? "") == $locacion["id_locacion"] ? "selected" : ""  ?>> <?= $locacion["municipio"] ?> - <?= $locacion["departamento"] ?></option>
+
+                                                    <?php endforeach ?>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+
                             <div class="row">
                                 <div class="col-12">
                                     <h5>Deposito Bancario</h5>
@@ -57,7 +165,7 @@
                                                     <div class="col-12 col-xl-4">
                                                         <div class="form-group-1">
                                                             <label for="numero_deposito_matricula[]">Nro Deposito</label>
-                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="4" maxlength="15" required="" inputmode="text">
+                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="4" maxlength="15" required="" inputmode="text" data-id="<?=time()?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-xl-5">
@@ -137,7 +245,7 @@
                                     <div class="col-sm-12 col-md-6 col-lg-4">
                                         <div class="form-group-1">
                                             <label for="paterno">Paterno</label>
-                                            <input class="form-control" id="paterno" name="paterno" type="text" >
+                                            <input class="form-control" id="paterno" name="paterno" type="text">
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-6 col-lg-4">
@@ -182,7 +290,7 @@
                                     <div class="col-12 col-xl-8">
                                         <div class="form-group-1">
                                             <label for="correo">Correo</label>
-                                            <input class="form-control text-lowercase" id="correo" name="correo" type="email" onkeyup="this.value = this.value.toUpperCase();" >
+                                            <input class="form-control text-lowercase" id="correo" name="correo" type="email" onkeyup="this.value = this.value.toUpperCase();">
                                         </div>
                                     </div>
                                 </div>
@@ -190,7 +298,7 @@
                                     <div class="col-12 col-xl-7">
                                         <div class="form-group-1">
                                             <label for="oficio_trabajo">Oficio de trabajo</label>
-                                            <input class="form-control" id="oficio_trabajo" name="oficio_trabajo" type="text" >
+                                            <input class="form-control" id="oficio_trabajo" name="oficio_trabajo" type="text" maxlength="25">
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-5">
@@ -212,7 +320,116 @@
                                         <input class="form-control text-uppercase" id="domicilio" name="domicilio" type="text" onkeyup="this.value = this.value.toUpperCase();" required>
                                     </div>
                                 </div>
+
+
                             </div>
+
+                            <div id="datos_academicos">
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Formaci&oacute;n Acad&eacute;mica </h5>
+                                        <p class="text-danger font-weight-bold"> Los siguientes Campos son Requeridos para generar su formulario 01. <br><b> Ingrese los datos con Mayor Grado Academico con el que cuente Actualmente. </b> </p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group-1">
+
+                                                <label for="institucion">Universidad/Institucion donde reliz&oacute; su formaci&oacute;n</label>
+                                                <!-- <input class="form-control text-uppercase" id="institucion" name="institucion" type="text" onkeyup="this.value = this.value.toUpperCase();" > -->
+                                                <input class="form-control" id="institucion" name="institucion" type="search" required>
+                                                <input type="hidden" name="id_unidad_academica" id="id_unidad_academica" value="">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="id_grado_academico">Titulo Obtenido</label>
+                                                <select id="id_grado_academico" name="id_grado_academico" class="form-select w-100">
+                                                    <option value="">Seleccione Titulo</option>
+                                                    <?php foreach ($grados_academicos as $grado) : ?>
+                                                        <option value="<?= $grado["id_grado_academico"] ?>"> <?= $grado["descripcion_grado_academico"] ?></option>
+                                                    <?php endforeach ?>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="nro_titulo_academico">Numero de Registro</label>
+                                                <input class="form-control" id="nro_titulo_academico" name="nro_titulo_academico" maxlength="10" minlength="4" type="text" min="0" max="9999999999" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="anio_expedicion_titulo">Año expedicion Titulo</label>
+                                                <input class="form-control" id="anio_expedicion_titulo" name="anio_expedicion_titulo" maxlength="4" type="text" min="1900" max="<?= date("Y") ?>" required minlength="4">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group-1">
+                                                <label for="profesion">Profesi&oacute;n</label>
+                                                <input class="form-control text-uppercase" id="profesion" name="profesion" type="text" onkeyup="this.value = this.value.toUpperCase();" required maxlength="47">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group-1">
+                                                <label for="area_especializacion">Area de Especiaizaci&oacute;n</label>
+                                                <input class="form-control text-uppercase" id="area_especializacion" name="area_especializacion" type="text" onkeyup="this.value = this.value.toUpperCase();" required maxlength="47">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <h5>Informaci&oacute;n Adicional (Opcional) </h5>
+                                        <p class="text-danger">Los siguientes Campos son Opcionales</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group-1">
+
+                                                <label for="nombre_institucion">Instituci&oacute;n &Uacute; Organizaci&oacute;n a la que pertenece</label>
+                                                <input class="form-control" id="nombre_institucion" name="nombre_institucion" type="text" onkeyup="this.value = this.value.toUpperCase();" maxlength="60">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="cargo_trabajo">Cargo Actual</label>
+                                                <input class="form-control" id="cargo_trabajo" name="cargo_trabajo" type="text" onkeyup="this.value = this.value.toUpperCase();" maxlength="27">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="vigencia_trabajo">Vigencia</label>
+                                                <input class="form-control" id="vigencia_trabajo" name="vigencia_trabajo" type="date" max="<?= date("Y") ?>">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group-1">
+                                                <label for="id_municipio">Lugar donde ocupa el cargo</label>
+                                                <select name="id_municipio" class="form-select" id="id_municipio" style="width: 100%;">
+                                                    <option value="">Seleccione</option>
+
+                                                    <?php foreach ($locaciones as $locacion) : ?>
+
+                                                        <option value="<?= $locacion["id_locacion"] ?>"> <?= $locacion["municipio"] ?> - <?= $locacion["departamento"] ?></option>
+
+                                                    <?php endforeach ?>
+
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+
                             <hr>
                             <div class="row">
                                 <div class="col-12">
@@ -238,7 +455,7 @@
                                                     <div class="col-12 col-xl-4">
                                                         <div class="form-group-1">
                                                             <label for="numero_deposito_matricula[]">Nro Deposito</label>
-                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="4" maxlength="15" required="" inputmode="text">
+                                                            <input class="p-0 form-control" id="numero_deposito_matricula[]" name="numero_deposito_matricula[]" type="text" minlength="4" maxlength="15" required="" inputmode="text" data-id="<?=time()?>">
                                                         </div>
                                                     </div>
                                                     <div class="col-12 col-xl-5">

@@ -6,6 +6,15 @@ use App\Controllers\Reportes\FpdfPsg;
 
 class InscripcionReporte extends FpdfPsg
 {
+    function SetDash($black = null, $white = null)
+    {
+        if ($black !== null)
+            $s = sprintf('[%.3F %.3F] 0 d', $black * $this->k, $white * $this->k);
+        else
+            $s = '[] 0 d';
+        $this->_out($s);
+    }
+
     public function formularioInscripcion($doc)
     {
         $this->AddPage('P', 'Letter');
@@ -660,5 +669,312 @@ class InscripcionReporte extends FpdfPsg
             $x3 * $this->k,
             ($h - $y3) * $this->k
         ));
+    }
+
+    public function formulario01($datos, $p = false)
+    {
+
+        // $pdf = new FPDF();
+        // $this->AddPage();
+        $meses = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        $this->AddPage('P', 'Letter');
+        $this->SetAutoPageBreak(false, 25);
+        $this->Image(FCPATH . '/imagenes/encabezado.png', -5, 0, 226);
+
+        $this->Image('http://localhost:90/gen_qr/qr_generator.php?code=' . base_url('inscripcion/verificar/' . md5($datos["id_persona_interesado"]) .'/'.md5($datos["id_publicacion"]). '&.png'), 175, 243, 20);
+
+        $this->SetFont('Arial', 'B', 16);
+        $this->SetTextColor(255, 0, 0);
+        $this->SetXY(165, 27);
+
+        $this->Cell(40, 10, str_pad($datos["correlativo_ficha_inscripcion"], 4, "0", STR_PAD_LEFT) . "-" . date("Y", strtotime($datos["fecha_registro"])), 0, 0, 'C');
+
+
+
+
+        $this->SetTextColor(0, 73, 150);
+
+
+        $this->SetDrawColor(0, 73, 150);
+        $this->SetLineWidth(0.5);
+        $this->SetXY(0, 27);
+        $this->setXY(0, 27);
+        // $this->SetDash(.5,1);
+        $this->Line(77, 35, 143, 35);
+
+
+        //imagen line
+        $this->Line(20, 40, 60, 40);
+        $this->Line(20, 80, 60, 80);
+        $this->Line(20, 80, 20, 40);
+        $this->Line(60, 80, 60, 40);
+
+
+        // titulo
+        $this->SetFont('Times', 'B', 16);
+        $this->Cell(220, 10, utf8_decode('FICHA DE INSCRIPCIÓN'), 0, 0, 'C');
+
+
+        $this->SetFont('Arial', '', 10);
+        // $this->SetTextColor(255,0,0);
+        $this->SetXY(65, 50);
+        $this->Cell(30, 5, utf8_decode('Curso/Programa: '), 0, 0, 'L');
+
+        $this->MultiCell(100, 5, utf8_decode($datos["grado_academico"] . ' EN ' . $datos["nombre_programa"] . $datos["nombre_programa"] . "."), '', 'L');
+        $this->Cell(83, 5, utf8_decode('Version: '), 0, 0, 'R');
+        $this->Cell(13, 5, utf8_decode($datos["numero_version"]), 0, 0, 'L');
+
+
+        $this->SetFillColor(0, 73, 102);
+        $this->SetTextColor(255, 255, 255);
+        $this->SetFont('Arial', 'B', 10);
+
+        $this->SetXY(20, 85);
+        $this->Cell(175, 5, utf8_decode('DATOS PERSONALES'), 1, 0, 'C', true);
+
+        $this->SetXY(20, 137);
+        $this->Cell(175, 5, utf8_decode('FORMACIÓN ACADÉMICA'), 1, 0, 'C', true);
+
+        $this->SetXY(20, 182);
+        $this->Cell(175, 5, utf8_decode('INFORMACIÓN ADICIONAL'), 1, 0, 'C', true);
+
+
+
+        $this->SetLineWidth(0.1);
+        $this->SetDash(1, 0.7);
+        $this->RoundedRect(20, 85, 175, 49, 2, '34');
+
+        $this->RoundedRect(20, 137, 175, 42, 2, '34');
+
+        $this->RoundedRect(20, 182, 175, 50, 2, '34');
+
+
+
+        $this->Line(40, 260, 75, 260);
+        $this->Line(100, 260, 145, 260);
+        $this->SetTextColor(0, 73, 150);
+
+        $this->SetFont('Arial', '', 8);
+
+        $this->SetXY(40, 261);
+        $this->Cell(35, 5, utf8_decode('Firma Participante'), 0, 0, 'C');
+
+        $this->SetXY(100, 261);
+        $this->Cell(45, 5, utf8_decode('Firma Encargado de Archivo'), 0, 0, 'C');
+
+        $this->SetXY(0, 240);
+        $this->Cell(220, 5, utf8_decode("El Alto " . (int) date('d') . " de " . $meses[date('m')] . " de " . date('Y')), 0, 0, 'C');
+
+        $this->SetXY(162, 240);
+        $this->Cell(45, 5, utf8_decode('Formulario. Nº 01'), 0, 0, 'C');
+
+        $this->SetXY(162, 262);
+        $this->Cell(45, 5, utf8_decode('SERIE "A"'), 0, 0, 'C');
+
+
+        $this->SetDash();
+
+        $this->RoundedRect(70, 92, 120, 5, 1, '1234');
+        $this->RoundedRect(70, 99, 120, 5, 1, '1234');
+        $this->RoundedRect(70, 106, 120, 5, 1, '1234');
+        $this->RoundedRect(70, 113, 45, 5, 1, '1234');
+        $this->RoundedRect(125, 113, 30, 5, 1, '1234');
+        $this->RoundedRect(175, 113, 15, 5, 1, '1234');
+        $this->RoundedRect(70, 120, 75, 5, 1, '1234');
+        $this->RoundedRect(160, 120, 30, 5, 1, '1234');
+        $this->RoundedRect(70, 127, 120, 5, 1, '1234');
+
+        $this->SetXY(50, 92);
+        $this->Cell(20, 5, utf8_decode('NOMBRE (S):'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(60, 5, utf8_decode('APELLIDO PATERNO:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(60, 5, utf8_decode('APELLIDO MATERNO:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(60, 5, utf8_decode('FECHA NAC:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(60, 5, utf8_decode('OCUPACIÓN:'), 0, 1, 'R');
+        $this->Ln(2);
+
+        $this->Cell(60, 5, utf8_decode('DOMICILIO ACTUAL:'), 0, 1, 'R');
+
+        $this->SetXY(115, 113);
+        $this->Cell(10, 5, utf8_decode('C.I.:'), 0, 0, 'R');
+
+        $this->SetXY(155, 113);
+        $this->Cell(20, 5, utf8_decode('EXPEDIDO:'), 0, 0, 'R');
+
+        $this->SetXY(140, 120);
+        $this->Cell(20, 5, utf8_decode('Tel/Cel:'), 0, 0, 'R');
+
+
+
+
+
+        $this->SetFont('Arial', '', 8);
+
+        $this->RoundedRect(100, 144, 90, 9, 1, '1234');
+        $this->RoundedRect(100, 155, 30, 5, 1, '1234');
+        $this->RoundedRect(155, 155, 35, 5, 1, '1234');
+        $this->RoundedRect(100, 163, 90, 5, 1, '1234');
+        $this->RoundedRect(100, 171, 90, 5, 1, '1234');
+
+        $this->SetFillColor(255, 255, 255);
+
+        $this->SetXY(30, 146);
+        $this->Cell(70, 5, utf8_decode('INSTITUCIÓN:'), 0, 1, 'R');
+        $this->Ln(2);
+
+        $this->Cell(90, 4, utf8_decode('AÑO DE EXPEDICIÓN'), 0, 1, 'R');
+        $this->Cell(90, 4, utf8_decode('DEL TITULO'), 0, 1, 'R');
+
+
+        $this->Ln(2);
+        $this->Cell(90, 5, utf8_decode('PROFESIÓN:'), 0, 1, 'R');
+        $this->Ln(1);
+        $this->Cell(90, 4, utf8_decode('ÁREA DE'), 0, 1, 'R');
+        $this->Cell(90, 4, utf8_decode('ESPECIALIZACIÓN:'), 0, 1, 'R');
+        $this->Ln(2);
+
+        $this->SetXY(135, 155);
+        $this->Cell(20, 5, utf8_decode('Nº REGISTRO:'), 0, 1, 'R');
+
+
+        $this->SetXY(10, 148);
+        $this->Cell(40, 5, utf8_decode('LICENCIATURA:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(40, 5, utf8_decode('MAESTRIA:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(40, 5, utf8_decode('DOCTORADO:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(40, 5, utf8_decode('OTROS:'), 0, 1, 'R');
+
+
+
+        // $this->SetXY(10, 150);
+
+
+        $this->RoundedRect(70, 190, 120, 5, 1, '1234');
+        $this->RoundedRect(60, 197, 60, 5, 1, '1234');
+        $this->RoundedRect(140, 197, 50, 5, 1, '1234');
+
+        $this->RoundedRect(70, 210, 120, 5, 1, '1234');
+        $this->RoundedRect(70, 217, 120, 5, 1, '1234');
+        $this->RoundedRect(70, 225, 120, 5, 1, '1234');
+
+
+        $this->SetXY(20, 188);
+        $this->Cell(50, 5, utf8_decode('INSTITUCIÓN U ORGANIZACIÓN'), 0, 1, 'R');
+        $this->SetXY(20, 191);
+
+        $this->Cell(50, 5, utf8_decode('A LA QUE PERTENECE:'), 0, 1, 'R');
+
+        $this->Ln(2);
+        $this->Cell(50, 5, utf8_decode('CARGO ACTUAL:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->SetFont('Arial', 'B', 8);
+
+        $this->Cell(210, 5, utf8_decode('LUGAR DONDE OCUPA EL CARGO:'), 0, 1, 'C');
+        $this->Ln(1);
+
+        $this->SetFont('Arial', '', 8);
+        $this->Line(91, 209, 139, 209);
+
+        $this->Cell(60, 5, utf8_decode('LOCALIDAD:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(60, 5, utf8_decode('PROVINCIA:'), 0, 1, 'R');
+        $this->Ln(2);
+        $this->Cell(60, 5, utf8_decode('DEPARTAMENTO:'), 0, 1, 'R');
+        $this->Ln(2);
+
+
+        $this->SetXY(100, 197);
+        $this->Cell(40, 5, utf8_decode('VIGENCIA:'), 0, 1, 'R');
+
+
+        //datos dianmicos
+
+        $this->SetXY(72, 92);
+        $this->Cell(40, 5, utf8_decode($datos["nombre"]), 0, 1, 'L');
+
+        $this->SetXY(72, 99);
+        $this->Cell(40, 5, utf8_decode($datos["paterno"]), 0, 1, 'L');
+
+        $this->SetXY(72, 106);
+        $this->Cell(40, 5, utf8_decode($datos["materno"]), 0, 1, 'L');
+
+        $this->SetXY(75, 113);
+        $this->Cell(40, 5, date("d / m /Y", strtotime($datos["fecha_nacimiento"])), 0, 1, 'L');
+
+        $this->SetXY(115, 113);
+        $this->Cell(40, 5, utf8_decode($datos["ci"]), 0, 1, 'C');
+
+        $this->SetXY(160, 113);
+        $this->Cell(40, 5, utf8_decode($datos["expedido"]), 0, 1, 'C');
+
+
+        $this->SetXY(72, 120);
+        $this->Cell(40, 5, substr(utf8_decode($datos["oficio_trabajo"]),0 ,35), 0, 1, 'L');
+
+
+        $this->SetXY(162, 120);
+        $this->Cell(40, 5, utf8_decode($datos["celular"]), 0, 1, 'L');
+
+        $this->SetXY(72, 127);
+        $this->Cell(40, 5, utf8_decode(substr($datos["domicilio"], 0, 60)), 0, 1, 'L');
+
+
+        $this->SetXY(102, 145);
+        $this->MultiCell(85, 3.5, utf8_decode($datos["nombre_unidad_academica"]), 0, 1, 'L');
+
+
+        $this->SetXY(102, 155);
+        $this->Cell(40, 5, utf8_decode($datos["anio_expedicion_titulo"]), 0, 1, 'L');
+
+
+        $this->SetXY(160, 155);
+        $this->Cell(40, 5, utf8_decode($datos["nro_titulo_academico"]), 0, 1, 'L');
+
+        $this->SetXY(102, 163);
+        $this->Cell(40, 5, utf8_decode($datos["profesion"]), 0, 1, 'L');
+
+        $this->SetXY(102, 171);
+        $this->Cell(40, 5, utf8_decode($datos["area_especializacion"]), 0, 1, 'L');
+
+        $this->Image(FCPATH . '/imagenes/' . ($datos["descripcion_grado_academico"] == "LICENCIATURA" ? "radio_checked.png" : "radio_blank.png"), 50, 149, 5, 3);
+        $this->Image(FCPATH . '/imagenes/' . ($datos["descripcion_grado_academico"] == "MAESTRÍA" ? "radio_checked.png" : "radio_blank.png"), 50, 156, 5, 3);
+        $this->Image(FCPATH . '/imagenes/' . ($datos["descripcion_grado_academico"] == "DOCTORADO" ? "radio_checked.png" : "radio_blank.png"), 50, 163, 5, 3);
+
+        if ($datos["descripcion_grado_academico"]) {
+            $this->Image(FCPATH . '/imagenes/' . (($datos["descripcion_grado_academico"] != "LICENCIATURA" and  $datos["descripcion_grado_academico"] != "MAESTRÍA" and  $datos["descripcion_grado_academico"] != "DOCTORADO") ? "radio_checked.png" : "radio_blank.png"), 50, 170, 5, 3);
+        } else {
+            $this->Image(FCPATH . '/imagenes/radio_blank.png', 50, 170, 5, 3);
+        }
+
+
+        $this->SetXY(72, 190);
+        $this->Cell(40, 5, utf8_decode($datos["nombre_institucion"]), 0, 1, 'L');
+
+        $this->SetXY(62, 197);
+        $this->Cell(40, 5, utf8_decode($datos["cargo_trabajo"]), 0, 1, 'L');
+
+        $this->SetXY(145, 197);
+        $this->Cell(40, 5, $datos["vigencia_trabajo"] ? date("d/m/Y", strtotime($datos["vigencia_trabajo"])) : "", 0, 1, 'L');
+
+        $this->SetXY(72, 210);
+        $this->Cell(40, 5, utf8_decode($datos["municipio"]), 0, 1, 'L');
+
+        $this->SetXY(72, 217);
+        $this->Cell(40, 5, utf8_decode($datos["provincia"]), 0, 1, 'L');
+
+        $this->SetXY(72, 225);
+        $this->Cell(40, 5, utf8_decode($datos["departamento"]), 0, 1, 'L');
+
+
+        // if ($p) {
+        //     $this->Output();
+        // } else {
+        return $this->Output("S");
+        // }
     }
 }

@@ -8,7 +8,8 @@
     <title>Posgrado UPEA | Sitio Oficial</title>
     <link rel="shortcut icon" href="<?= base_url('edugrids/assets/images/favicon.ico'); ?>" type="image/x-icon" />
     <link rel="icon" type="image/png" href="<?= base_url('edugrids/assets/images/favicon.png'); ?>" />
-
+    <link rel="stylesheet" href="<?= base_url('edugrids/assets/css/jquery-ui.css')?>">
+    <link rel="stylesheet" href="<?= base_url('edugrids/assets/css/jquery.auto-complete.min.css')?>" />
     <meta name="keywords" content="posgrado,upea,postgrado,diplomado,especialidad,maestria,doctorado" />
     <meta name="author" content="POSGRADO Dev's" />
     <meta name="robots" content="robots.txt" />
@@ -73,6 +74,8 @@
     <script src="<?= base_url('edugrids/assets/js/jquery.expander.min.js'); ?>"></script>
     <script src="<?= base_url('edugrids/assets/js/jquery.validate.min.js'); ?>"></script>
     <script src="<?= base_url('edugrids/assets/js/jquery.toast.js'); ?>"></script>
+    <script src="<?= base_url('edugrids/assets/js/jquery.auto-complete.min.js')?>"></script>
+    <script src="<?= base_url('edugrids/assets/js//jquery-ui.js')?>"></script>
     <script src="<?= base_url('edugrids/assets/js/bootstrap.min.js'); ?>"></script>
     <script src="<?= base_url('edugrids/assets/js/count-up.min.js'); ?>"></script>
     <script src="<?= base_url('edugrids/assets/js/wow.min.js'); ?>"></script>

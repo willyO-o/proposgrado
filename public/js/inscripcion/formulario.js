@@ -1,8 +1,61 @@
+var universidades = [];
+
 $(function() {
     //assign json response to javascript variable
     let publicacion = null;
+    let fecha_actual = new Date();
+    let anio_actual = fecha_actual.getFullYear();
+
+
     $.get(`/oferta/detalleProgramaJson/id_publicacion,monto_matricula,precio_programa/${$('#id_publicacion').val()}`, function(r) {
         publicacion = r;
+    });
+
+    $.get("/inscripcion/listarUniversidades", {}, function(data, textStatus, jqXHR) {
+        // console.log(data);
+        universidades = data;
+
+        $("#institucion").autocomplete({
+            source: function(request, response) {
+                response($.map(universidades, function(obj, key) {
+                    var nombre = obj.nombre.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase();
+
+                    if (nombre.indexOf(request.term.normalize('NFD').replace(/[\u0300-\u036f]/g, "").toUpperCase()) != -1) {
+                        return {
+                            label: obj.nombre,
+                            value: obj.id_unidad_academica
+                        }
+                    } else {
+                        return null;
+                    }
+
+                }));
+
+            },
+            minLength: 2,
+            select: function(event, ui) {
+                event.preventDefault();
+                $("#id_unidad_academica").val(ui.item.value);
+                $("#institucion").val(ui.item.label);
+                $("#institucion").attr("readonly", true);
+
+            },
+            change: function(event, ui) {
+                $("#id_unidad_academica").val("");
+                if ($("#institucion").val() == "" || ui.item == null) {
+                    $("#id_unidad_academica").val("");
+                } else {
+                    $("#id_unidad_academica").val(ui.item.value);
+
+                }
+
+
+            },
+
+        }).on("focus", function() {
+            $("#institucion").attr("readonly", false);
+
+        });
     });
 
     $('#form-carnet').on('submit', function(e) {
@@ -47,6 +100,7 @@ $(function() {
     });
 
     $('#ciudad').select2();
+    $("#id_municipio").select2();
     let tamanoTotalEnvio = 30;
     let cantidadMaximoArchivos = 3;
     let tamanoMaximoArchivo = 5;
@@ -81,7 +135,7 @@ $(function() {
 				<div class="col-12 col-xl-4">
 					<div class="form-group-1">
 						<label for="${valores.numeroDeposito}">Nro Deposito</label>
-						<input class="p-0 form-control" id="${valores.numeroDeposito}" name="${valores.numeroDeposito}" type="text" minlength="4" required disabled>
+						<input class="p-0 form-control" id="${valores.numeroDeposito}" name="${valores.numeroDeposito}" type="text" minlength="4" data-id="${Math.round(Math.random() * 10000)}" required disabled>
 					</div>
 				</div>
 				<div class="col-12 col-xl-5">
@@ -340,12 +394,31 @@ $(function() {
         var j = this;
         datosPersonales = $(`#datos-personales :input`);
         depositosBancarios = $(`.elemento-matricula`);
+        datosAcademicos = $(`#datos_academicos :input`);
         parametrosModal('modal', 'Por favor verifica los datos a enviar en el siguiente detalle', 'modal-lg');
         $('#modal-body').html(``);
         if (datosPersonales.length > 0) {
             $('#modal-body').append('<h4 class="title pb-3">Datos Personales<h4>');
             datosPersonales.each(function(index, element) {
-                $('#modal-body').append(etiquetaValor($('label[for=' + element.id + ']').html(), element.value));
+                if ($('label[for=' + element.id + ']').html() && element.value && $(element).attr('type') != 'hidden') {
+                    // verificar si el elemento es tipo select capturar el texto seleccionado
+                    let valor = $(element).is('select') ? $(element).find('option:selected').text() : element.value;
+
+                    $('#modal-body').append(etiquetaValor($('label[for=' + element.id + ']').html(), valor));
+
+                }
+            });
+        }
+        if (datosAcademicos.length > 0) {
+            $('#modal-body').append('<h4 class="title pb-3">Datos Academicos y Adicionales<h4>');
+            datosAcademicos.each(function(index, element) {
+                if ($('label[for=' + element.id + ']').html() && element.value && $(element).attr('type') != 'hidden') {
+                    // verificar si el elemento es tipo select capturar el texto seleccionado
+                    let valor = $(element).is('select') ? $(element).find('option:selected').text() : element.value;
+
+                    $('#modal-body').append(etiquetaValor($('label[for=' + element.id + ']').html(), valor));
+
+                }
             });
         }
         if (depositosBancarios.length > 0) {
@@ -381,6 +454,38 @@ $(function() {
         $('#form-inscribir').addClass('was-validated');
     });
 
+    $("#depositos").on("change", `input[name="numero_deposito_matricula[]"]`, function(e) {
+
+
+        let nro_deposito = $(this).val();
+        let input = $(this);
+
+
+        if (nro_deposito) {
+
+            let elementos = $(`#depositos input[name="numero_deposito_matricula[]"]`);
+            elementos.each(function(i, obj) {
+
+                if ($(obj).val() == nro_deposito && $(obj).data('id') != input.data('id')) {
+                    Swal.fire({ title: 'INFORMACIÓN', icon: 'error', html: 'No se puede repetir un numero de deposito en varios campos', showCloseButton: true, focusConfirm: false });
+                    input.val('');
+                    input.focus();
+                    return false;
+                }
+            });
+
+
+            $.post("/inscripcion/verificarNroDeposito", { nro_deposito: nro_deposito })
+                .done(function(data) {
+                    if (data.cantidad) {
+                        Swal.fire({ title: 'INFORMACIÓN', icon: 'error', html: `El número de deposito <b>${nro_deposito}</b> ya fue registrado con otra Inscripcion`, showCloseButton: true, focusConfirm: false });
+                        input.val('');
+                    }
+                }).fail(function(error) {})
+        }
+
+    })
+
     Inputmask.extendDefaults({ placeholder: '' });
     Inputmask.extendDefinitions({
         // A: {
@@ -398,9 +503,25 @@ $(function() {
     $('#paterno').inputmask('A{1,20} A{1,20} A{1,20}');
     $('#materno').inputmask('A{1,20} A{1,20} A{1,20}');
     $('#nombre').inputmask('A{1,20} A{1,20} A{1,20}');
-    $('#oficio_trabajo').inputmask('A{1,30} A{1,30} A{1,30}');
-    $('#celular').inputmask('9{8,8}');
-    $('#domicilio').attr('maxlength', '100');
+    $('#oficio_trabajo').inputmask('A{1,25} A{1,25} A{1,25}');
+    $('#celular').inputmask('integer', { min: 60000000, max: 79999999, length: 8 });
+    $('#domicilio').attr('maxlength', '60');
+    $('#domicilio').inputmask({ length: 60 });
+
+
+
+    $("#nro_titulo_academico").inputmask('9{4,10}');
+    $("#anio_expedicion_titulo").inputmask('integer', { min: 1940, max: anio_actual, length: 4 });
+    $("#profesion").inputmask({ length: 47 });
+    $("#area_especializacion").inputmask({ length: 47 });
+
+    $("#nombre_institucion").inputmask({ length: 60 });
+    $("#cargo_trabajo").inputmask({ length: 28 });
+
+    $(`input[name="numero_deposito_matricula[]"]`).inputmask('integer', { minLength: 4, maxContentLength: 15 })
+
+
+
 
     // $('#correo').inputmask({
     // 	mask: '*{1,20}[.*{1,20}][.*{1,20}][.*{1,20}]@*{1,20}[.*{2,6}][.*{1,2}]',

@@ -39,10 +39,11 @@
                                 <strong> Descarga tus archivos:</strong>
                                 <br>
                                 <ol>
-                                    <li>1.- <a href="<?= $solicitud ?>" id="solicitud_inscripcion" download="Solicitud de inscripcion">SOLICITUD DE INSCRIPCI&Oacute;N </a></li>
-                                    <li>2.- <a href="<?= $cartaCompromiso ?>" download="Carta de Compromiso">CARTA DE COMPROMISO</a></li>
-                                    <li>3.- <a href="<?= $formulario ?>" id="formulario_inscripcion" download="Formulario de inscripcion">FORMULARIO DE INSCRIPCI&Oacute;N</a></li>
-                                    <li>4.- <a href="<?= $solicitudProrroga ?>" download="Carta de Prorroga">SOLICITUD DE PR&Oacute;RROGA</a></li>
+                                    <li>1.- <a href="<?= $formulario01 ?>" id="solicitud_inscripcion" download="Formulario 01">FORMULARIO 01 </a></li>
+                                    <li>2.- <a href="<?= $solicitud ?>" id="solicitud_inscripcion" download="Solicitud de inscripcion">SOLICITUD DE INSCRIPCI&Oacute;N </a></li>
+                                    <li>3.- <a href="<?= $cartaCompromiso ?>" download="Carta de Compromiso">CARTA DE COMPROMISO</a></li>
+                                    <li>4.- <a href="<?= $formulario ?>" id="formulario_inscripcion" download="Formulario de inscripcion">FORMULARIO DE INSCRIPCI&Oacute;N</a></li>
+                                    <li>5.- <a href="<?= $solicitudProrroga ?>" download="Carta de Prorroga">SOLICITUD DE PR&Oacute;RROGA</a></li>
                                 </ol>
                                 <!-- 4.- <a href="" id="formulario_01" download="formulario 01">FORMULARIO 01</a> -->
                                 <!-- <br> -->
