@@ -725,7 +725,7 @@ class InscripcionReporte extends FpdfPsg
         $this->Cell(13, 5, utf8_decode($datos["numero_version"]), 0, 0, 'L');
 
 
-        $this->SetFillColor(0, 73, 102);
+        $this->SetFillColor(0, 73, 150);
         $this->SetTextColor(255, 255, 255);
         $this->SetFont('Arial', 'B', 10);
 

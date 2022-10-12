@@ -503,7 +503,7 @@ $(function() {
     $('#paterno').inputmask('A{1,20} A{1,20} A{1,20}');
     $('#materno').inputmask('A{1,20} A{1,20} A{1,20}');
     $('#nombre').inputmask('A{1,20} A{1,20} A{1,20}');
-    $('#oficio_trabajo').inputmask('A{1,25} A{1,25} A{1,25}');
+    $('#oficio_trabajo').inputmask('A{1,40} A{1,40} A{1,40}');
     $('#celular').inputmask('integer', { min: 60000000, max: 79999999, length: 8 });
     $('#domicilio').attr('maxlength', '60');
     $('#domicilio').inputmask({ length: 60 });

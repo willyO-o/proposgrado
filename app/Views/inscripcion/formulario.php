@@ -298,7 +298,7 @@
                                     <div class="col-12 col-xl-7">
                                         <div class="form-group-1">
                                             <label for="oficio_trabajo">Oficio de trabajo</label>
-                                            <input class="form-control" id="oficio_trabajo" name="oficio_trabajo" type="text" maxlength="25">
+                                            <input class="form-control" id="oficio_trabajo" name="oficio_trabajo" type="text" maxlength="40">
                                         </div>
                                     </div>
                                     <div class="col-12 col-xl-5">
