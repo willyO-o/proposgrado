@@ -87,6 +87,24 @@ class Inscripcion extends BaseController
 				$this->registrarDepositos($this->request, $inscripcion['id_inscripcion_online']);
 				return $this->response->setJSON(['exito' => "$nombreCompleto, ya se encuentra inscrito en el programa {$publicacion['nombre_programa']} ¿Desea ver sus cartas y formularios de su inscripción?.", 'idPersonaExterna' => md5($persona['id_persona_externa']), 'idPublicacion' => md5($idPublicacion)]);
 			} else {
+
+
+				$validation =  \Config\Services::validation();
+				$validation->setRules([
+					// 'id_publicacion' => ['label' => 'nro publicación', 'rules' => 'required|is_natural_no_zero'],
+					'id_grado_academico' => ['label' => 'Titulo Obtenido', 'rules' => 'required|is_natural_no_zero'],
+					'id_unidad_academica' => ['label' => 'Universidad', 'rules' => 'required|is_natural_no_zero', 'errors' => ['is_natural_no_zero' => 'Debe seleccionar una universidad de la Lista']],
+					'anio_expedicion_titulo' => ['label' => 'Año Expedicion Titulo', 'rules' => 'required|is_natural_no_zero|exact_length[4]|greater_than_equal_to[1900]|less_than_equal_to[' . date("Y") . ']'],
+					'nro_titulo_academico' => ['label' => 'Numero de Registro', 'rules' => 'required|is_natural_no_zero|min_length[3]|max_length[10]'],
+					'profesion' => ['label' => 'Profesion', 'rules' => 'required|max_length[80]'],
+					'area_especializacion' => ['label' => 'Area de Especializacion', 'rules' => 'required|max_length[180]'],
+
+				]);
+
+				if (!$validation->withRequest($this->request)->run()) {
+					return $this->response->setJSON(['error' => $validation->listErrors()]);
+				}
+
 				$tipoInscripcion = $this->request->getVar('tipo_inscripcion') != null ? 'SISTEMA' : 'PAGINA WEB';
 				$responsable = $this->nuloSiVacio($this->request->getVar('responsable'));
 				$idInscripcionOnline = $this->inscribirInformar($idPublicacion, $persona['id_persona_externa'], $this->request->getVar('tipo_deposito_matricula') != null ? 'PREINSCRITO' : 'INTERESADO', $tipoInscripcion, $responsable);
@@ -130,7 +148,7 @@ class Inscripcion extends BaseController
 				'id_grado_academico' => ['label' => 'Titulo Obtenido', 'rules' => 'required|is_natural_no_zero'],
 				'id_unidad_academica' => ['label' => 'Universidad', 'rules' => 'required|is_natural_no_zero', 'errors' => ['is_natural_no_zero' => 'Debe seleccionar una universidad de la Lista']],
 				'anio_expedicion_titulo' => ['label' => 'Año Expedicion Titulo', 'rules' => 'required|is_natural_no_zero|exact_length[4]|greater_than_equal_to[1900]|less_than_equal_to[' . date("Y") . ']'],
-				'nro_titulo_academico' => ['label' => 'Numero de Registro', 'rules' => 'required|is_natural_no_zero|min_length[5]|max_length[10]'],
+				'nro_titulo_academico' => ['label' => 'Numero de Registro', 'rules' => 'required|is_natural_no_zero|min_length[3]|max_length[10]'],
 				'profesion' => ['label' => 'Profesion', 'rules' => 'required|max_length[80]'],
 				'area_especializacion' => ['label' => 'Area de Especializacion', 'rules' => 'required|max_length[180]'],
 
